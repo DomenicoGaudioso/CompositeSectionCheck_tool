@@ -2,7 +2,7 @@
 
 Il framework definitivo e interattivo per il calcolo, l'omogeneizzazione e la verifica di sezioni composte acciaio-calcestruzzo.
 
-👉 **[Guarda la Demo Interattiva Web](https://domenicogaudioso.github.io/CompositeSectionCheck/)** 👈
+👉 **[Guarda la Demo Interattiva Web](https://domenicogaudioso.github.io/CompositeSectionCheck_tool/)** 👈
 
 ## Funzionalità
 - **Motore di Omogeneizzazione**: Calcolo del rapporto modulare $n$, sezione reagente e inerzia.
