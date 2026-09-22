@@ -413,7 +413,7 @@
 <div class="docbar">
   <a href="../">← ing. Domenico Gaudioso</a>
   <span>CompositeSectionCheck · sezioni composte</span>
-  <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck">Repository sorgente →</a>
+  <a href="https://apps.civilbox.xyz/composite-more-t-section">Apri l'app su CivilBox →</a>
 </div>
 
 <!-- HERO -->
@@ -683,34 +683,30 @@
 <section class="section">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title">Installazione</h2>
-      <p class="section-subtitle">Scegli il branch della famiglia di sezione, installa le dipendenze e avvia l'app Streamlit.</p>
+      <h2 class="section-title">Come accedere</h2>
+      <p class="section-subtitle">Le app CompositeSectionCheck vivono su CivilBox: scegli la famiglia di sezione e lavora sul tuo Excel di input.</p>
     </div>
     <div class="code-block">
       <div class="code-header">
         <button class="copy-btn" id="copyBtn">Copia</button>
-        <span class="code-label">bash</span>
+        <span class="code-label">app CivilBox</span>
       </div>
-      <pre class="code-content" id="codeContent"><span class="code-comment"># Clona il branch della famiglia che ti serve</span>
-<span class="code-command">git clone -b More-T-section https://github.com/DomenicoGaudioso/CompositeSectionCheck.git</span>
-<span class="code-command">cd CompositeSectionCheck</span>
+      <pre class="code-content" id="codeContent"><span class="code-comment"># Doppio T composto</span>
+<span class="code-command">https://apps.civilbox.xyz/composite-section-check</span>    <span class="code-comment"># sezione singola</span>
+<span class="code-command">https://apps.civilbox.xyz/composite-more-t-section</span>  <span class="code-comment"># multi-sezione ⭐ riferimento</span>
 
-<span class="code-comment"># Dipendenze (Streamlit, NumPy, Pandas, Plotly, Shapely, SciPy, openpyxl)</span>
-<span class="code-command">pip install -r requirements.txt</span>
+<span class="code-comment"># Doppio T irrigidito (nervature d'anima)</span>
+<span class="code-command">https://civilbox.xyz/tools</span>                           <span class="code-comment"># catalogo app</span>
 
-<span class="code-comment"># Avvia l'app</span>
-<span class="code-command">streamlit run app.py</span>
+<span class="code-comment"># Cassone</span>
+<span class="code-command">https://apps.civilbox.xyz/composite-cassone</span>         <span class="code-comment"># sezione singola</span>
+<span class="code-command">https://apps.civilbox.xyz/composite-more-cassone</span>    <span class="code-comment"># multi-anima, multi-sezione</span>
 
-<span class="code-comment"># Branch disponibili</span>
-<span class="code-comment"># More-T-section      ⭐ doppio T composto multi-sezione (riferimento)</span>
-<span class="code-comment"># Sezione-a-doppio-T  doppio T composto, sezione singola</span>
-<span class="code-comment"># More-T-irrigidita   T con nervature d'anima, multi-sezione</span>
-<span class="code-comment"># Sezione-T-irrigidita T con nervature d'anima, sezione singola</span>
-<span class="code-comment"># More-Cassone        cassone multi-anima con ribs, multi-sezione</span>
-<span class="code-comment"># Cassone             cassone con ribs, sezione singola</span></pre>
+<span class="code-comment"># Input da file Excel (fogli Sezione + Sollecitazioni)</span>
+<span class="code-comment"># template Dati_Input_*_multi.xlsx · report Word incluso</span></pre>
     </div>
     <p class="install-note">
-      ℹ️ Input da file Excel (fogli <b>Sezione</b> e <b>Sollecitazioni</b>) — template <code>Dati_Input_*_multi.xlsx</code> inclusi nel branch. <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck">Tutta la documentazione su GitHub</a>.
+      ℹ️ Accesso con account CivilBox. <a href="https://civilbox.xyz/tools">Tutte le app su CivilBox</a>.
     </p>
   </div>
 </section>
@@ -724,8 +720,8 @@
         <h2 class="cta-title">Verifica il tuo impalcato composto</h2>
         <p class="cta-subtitle">Doppio T, T irrigidito o cassone: una famiglia di sezione, un branch, tutta la filiera dal getto della soletta alla relazione Word.</p>
         <div class="cta-buttons">
-          <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck" class="btn btn-primary" target="_blank" rel="noopener noreferrer">⭐ Vai su GitHub</a>
-          <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck/tree/More-T-section" class="btn btn-secondary">⛏️ Branch di riferimento</a>
+          <a href="https://apps.civilbox.xyz/composite-more-t-section" class="btn btn-primary" target="_blank" rel="noopener noreferrer">⛏️ Apri l'app su CivilBox</a>
+          <a href="https://civilbox.xyz/tools" class="btn btn-secondary">🧰 Tutte le app</a>
         </div>
       </div>
     </div>
@@ -733,7 +729,7 @@
 </section>
 
 <footer class="footer">
-  CompositeSectionCheck — creato da <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck" target="_blank" rel="noopener noreferrer">Domenico Gaudioso</a> · Parte di <a href="https://civilbox.xyz" target="_blank" rel="noopener noreferrer">civilbox.xyz</a> · <a href="mailto:info@civilbox.xyz">Contattaci</a> · <a href="../">← Sito personale</a>
+  CompositeSectionCheck — creato da <a href="https://civilbox.xyz" target="_blank" rel="noopener noreferrer">Domenico Gaudioso</a> · Parte di <a href="https://civilbox.xyz" target="_blank" rel="noopener noreferrer">civilbox.xyz</a> · <a href="mailto:info@civilbox.xyz">Contattaci</a> · <a href="../">← Sito personale</a>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -971,227 +967,612 @@
     ctx2.textAlign = 'left';
   }
 
-  /* ============================================================
-     CSC — STAGE 1 · FASI COSTRUTTIVE (sezione trasformata)
-     ============================================================ */
-  const CSC_PHASES = [
-    { name: 'G1 · SOLO ACCIAIO', short: 'G1', n: 1.0,  note: 'trave metallica in cantiere' },
-    { name: 'GETTO SOLETTA',     short: 'getto', n: 6.42, note: 'n₀ = E_s / E_cm' },
-    { name: 'POST-COMPOSITO',    short: 'post',  n: 6.42, note: 'sezione trasformata' },
-    { name: 'RITIRO + FLUAGE',   short: 'n∞',    n: 12.8, note: 'n∞ = n₀ (1 + φ)' },
-    { name: 'FESSURATO SLE',     short: 'SLE',   n: 12.8, note: 'solo armatura tesa' }
-  ];
-  function drawSteelI(ctx2, cx, cy, s, alpha) {
-    // doppio T saldato centrato in cx,cy — h totale ~ 3.4s
-    const hw = 1.55 * s, ft = 0.16 * s, fh = 0.28 * s, ww = 0.14 * s, wh = 2.6 * s;
-    ctx2.globalAlpha = alpha;
-    ctx2.fillStyle = '#3a3f4a';
-    ctx2.strokeStyle = 'rgba(0,212,170,0.85)';
-    ctx2.lineWidth = 1.6;
-    ctx2.fillRect(cx - hw, cy - wh / 2 - fh, 2 * hw, ft); ctx2.strokeRect(cx - hw, cy - wh / 2 - fh, 2 * hw, ft);
-    ctx2.fillRect(cx - hw, cy + wh / 2, 2 * hw, ft);     ctx2.strokeRect(cx - hw, cy + wh / 2, 2 * hw, ft);
-    ctx2.fillRect(cx - ww / 2, cy - wh / 2, ww, wh);      ctx2.strokeRect(cx - ww / 2, cy - wh / 2, ww, wh);
-    ctx2.globalAlpha = 1;
-  }
-  function drawSlab(ctx2, cx, cy, s, alpha, cracked) {
-    const hw = 2.5 * s, th = 0.5 * s;
-    const y = cy - 2.6 * s / 2 - 0.28 * s - 0.16 * s - th;
-    ctx2.globalAlpha = alpha;
-    ctx2.fillStyle = cracked ? 'rgba(120,124,134,0.45)' : '#6b6f7a';
-    ctx2.fillRect(cx - hw, y, 2 * hw, th);
-    ctx2.strokeStyle = cracked ? 'rgba(246,120,32,0.9)' : 'rgba(0,212,170,0.85)';
-    ctx2.lineWidth = 1.6;
-    ctx2.strokeRect(cx - hw, y, 2 * hw, th);
-    if (cracked) {
-      ctx2.strokeStyle = 'rgba(246,120,32,0.9)';
-      ctx2.lineWidth = 1.2;
-      for (let i = -3; i <= 3; i++) {
-        ctx2.beginPath();
-        ctx2.moveTo(cx + i * hw / 3.5, y);
-        ctx2.lineTo(cx + i * hw / 3.5 + 8, y + th);
-        ctx2.stroke();
-      }
-    } else {
-      hatch(ctx2, cx - hw, y, 2 * hw, th, 9, 'rgba(240,240,245,0.28)');
-    }
-    // pioli Nelson
-    ctx2.fillStyle = '#00d4aa';
-    for (let i = -3; i <= 3; i++) {
-      ctx2.fillRect(cx + i * hw / 3.8 - 1.5, y + th - 1, 3, 7);
-    }
-    ctx2.globalAlpha = 1;
-  }
-  function drawStressProfile(ctx2, x0, yTop, yBot, sigTop, sigBot, alpha) {
-    // diagramma σ sull'altezza: asse verticale in x0, σ positiva a destra
-    const H = yBot - yTop, sc = 3.2;
-    ctx2.save();
-    ctx2.globalAlpha = alpha;
-    ctx2.strokeStyle = 'rgba(240,240,245,0.35)';
-    ctx2.lineWidth = 1;
-    ctx2.beginPath(); ctx2.moveTo(x0, yTop - 12); ctx2.lineTo(x0, yBot + 12); ctx2.stroke();
-    const xT = x0 + sigTop * sc, xB = x0 + sigBot * sc;
-    // fill
+  /* ============ pannelli "figura plotly" (stile plot delle repo) ============
+     Palette dai sorgenti:
+     - CompositeSectionCheck SGMPy_section_v01._plot_style:
+       acciaio #1f77b4 · calcestruzzo #111111 · armatura #f28e2b · decurtata #d62728
+     - strutturanl/grafici/base.py:
+       getto #c8ccd2 · contorno #4d4d4d · barre #8b1a1a · trefoli #1f4e79
+       baricentro #cc0000 · dentro #1a7a3a · fuori #c0392b
+     Tensioni SGMPy_check.tension: linea default plotly + fill, barre 'orange'.
+  */
+  const PLOT = {
+    steel: '#1f77b4', concrete: '#111111', bar: '#f28e2b', removed: '#d62728',
+    getto: '#c8ccd2', contorno: '#4d4d4d', barre: '#8b1a1a', trefoli: '#1f4e79',
+    baricentro: '#cc0000', dentro: '#1a7a3a', fuori: '#c0392b',
+    curve: '#636efa', grid: '#eef0f3', axis: '#444444', titlec: '#4d4d4d', annc: '#666666'
+  };
+  function roundRectPath(ctx2, x, y, w, h, r) {
     ctx2.beginPath();
-    ctx2.moveTo(x0, yTop); ctx2.lineTo(xT, yTop); ctx2.lineTo(xB, yBot); ctx2.lineTo(x0, yBot); ctx2.closePath();
-    const g = ctx2.createLinearGradient(x0, 0, x0 + 40, 0);
-    g.addColorStop(0, 'rgba(0,212,170,0.05)');
-    g.addColorStop(1, 'rgba(0,212,170,0.22)');
-    ctx2.fillStyle = g; ctx2.fill();
-    ctx2.strokeStyle = '#00d4aa'; ctx2.lineWidth = 2; ctx2.stroke();
-    // asse neutro
-    let yN = null;
-    if (sigTop !== sigBot) {
-      const t = sigTop / (sigTop - sigBot);
-      if (t >= -0.02 && t <= 1.02) yN = yTop + t * H;
+    ctx2.moveTo(x + r, y);
+    ctx2.arcTo(x + w, y, x + w, y + h, r);
+    ctx2.arcTo(x + w, y + h, x, y + h, r);
+    ctx2.arcTo(x, y + h, x, y, r);
+    ctx2.arcTo(x, y, x + w, y, r);
+    ctx2.closePath();
+  }
+  function figPanel(ctx2, x, y, w, h, title) {
+    ctx2.save();
+    ctx2.fillStyle = '#ffffff';
+    ctx2.strokeStyle = '#dcdcdc';
+    ctx2.lineWidth = 1;
+    roundRectPath(ctx2, x, y, w, h, 8);
+    ctx2.fill(); ctx2.stroke();
+    if (title) {
+      ctx2.font = '600 13px -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+      ctx2.fillStyle = PLOT.titlec;
+      ctx2.textAlign = 'center';
+      ctx2.fillText(title, x + w / 2, y + 24);
+      ctx2.textAlign = 'left';
     }
-    if (yN !== null) {
-      ctx2.setLineDash([5, 4]);
-      ctx2.strokeStyle = 'rgba(242,200,44,0.85)';
-      ctx2.beginPath(); ctx2.moveTo(x0 - 26, yN); ctx2.lineTo(x0 + 44, yN); ctx2.stroke();
-      ctx2.setLineDash([]);
-      label(ctx2, 'N.A.', x0 + 48, yN + 3, 'rgba(242,200,44,0.9)', 9);
+    ctx2.restore();
+    // box interno del plot (margini stile plotly)
+    return { x: x + 58, y: y + 42, w: w - 78, h: h - 92, full: { x, y, w, h } };
+  }
+  function figAxes(ctx2, b, xlabel, ylabel, opts) {
+    opts = opts || {};
+    ctx2.save();
+    ctx2.font = '10px -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+    // griglia
+    ctx2.strokeStyle = PLOT.grid; ctx2.lineWidth = 1;
+    const nx = opts.nx || 5, ny = opts.ny || 5;
+    for (let i = 1; i < nx; i++) {
+      const x = b.x + b.w * i / nx;
+      ctx2.beginPath(); ctx2.moveTo(x, b.y); ctx2.lineTo(x, b.y + b.h); ctx2.stroke();
     }
-    label(ctx2, (sigTop >= 0 ? '+' : '') + sigTop.toFixed(0), xT + (sigTop >= 0 ? 6 : -34), yTop + 4, 'rgba(240,240,245,0.85)', 10);
-    label(ctx2, (sigBot >= 0 ? '+' : '') + sigBot.toFixed(0), xB + (sigBot >= 0 ? 6 : -34), yBot + 4, 'rgba(240,240,245,0.85)', 10);
-    label(ctx2, 'σ [MPa]  + trazione', x0 - 26, yTop - 20, 'rgba(138,138,154,1)', 9);
+    for (let i = 1; i < ny; i++) {
+      const y = b.y + b.h * i / ny;
+      ctx2.beginPath(); ctx2.moveTo(b.x, y); ctx2.lineTo(b.x + b.w, y); ctx2.stroke();
+    }
+    // assi
+    ctx2.strokeStyle = PLOT.axis; ctx2.lineWidth = 1.2;
+    ctx2.beginPath(); ctx2.moveTo(b.x, b.y); ctx2.lineTo(b.x, b.y + b.h); ctx2.lineTo(b.x + b.w, b.y + b.h); ctx2.stroke();
+    ctx2.fillStyle = PLOT.annc;
+    if (xlabel) {
+      ctx2.textAlign = 'center';
+      ctx2.fillText(xlabel, b.x + b.w / 2, b.y + b.h + 30);
+      ctx2.textAlign = 'left';
+    }
+    if (ylabel) {
+      ctx2.save();
+      ctx2.translate(b.x - 40, b.y + b.h / 2);
+      ctx2.rotate(-Math.PI / 2);
+      ctx2.textAlign = 'center';
+      ctx2.fillText(ylabel, 0, 0);
+      ctx2.restore();
+      ctx2.textAlign = 'left';
+    }
     ctx2.restore();
   }
+  function figLegend(ctx2, x, y, items) {
+    // legenda verticale stile plotly in alto a destra
+    ctx2.save();
+    ctx2.font = '10.5px -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+    let yy = y;
+    for (const [col, txt] of items) {
+      ctx2.strokeStyle = col; ctx2.lineWidth = 2.2;
+      ctx2.beginPath(); ctx2.moveTo(x, yy); ctx2.lineTo(x + 20, yy); ctx2.stroke();
+      ctx2.fillStyle = '#444';
+      ctx2.fillText(txt, x + 26, yy + 3.5);
+      yy += 18;
+    }
+    ctx2.restore();
+  }
+  function studShape(ctx2, cx, yFlangeTop, scale, up) {
+    // Piolo Nelson (EN 1994-2): gambo Ød con testa, h_sc totale.
+    // Default app: d_piolo 16, hsc 150 (h/d = 9.4). Disegnato sezionato:
+    // gambo come rettangolo d, testa come rettangolo ~2d.
+    const d = 16 * scale, hsc = 150 * scale, dHead = 32 * scale, hHead = 9 * scale;
+    const dir = up ? -1 : 1;
+    ctx2.save();
+    ctx2.strokeStyle = PLOT.steel; ctx2.lineWidth = 1.6;
+    ctx2.fillStyle = 'rgba(31,119,180,0.10)';
+    // gambo
+    const y0 = yFlangeTop, y1 = yFlangeTop + dir * hsc;
+    ctx2.fillRect(cx - d / 2, Math.min(y0, y1), d, hsc);
+    ctx2.strokeRect(cx - d / 2, Math.min(y0, y1), d, hsc);
+    // testa in cima (nel cls)
+    ctx2.fillRect(cx - dHead / 2, Math.min(y1 - dir * hHead, y1), dHead, hHead);
+    ctx2.strokeRect(cx - dHead / 2, Math.min(y1 - dir * hHead, y1), dHead, hHead);
+    ctx2.restore();
+  }
+
+  /* ============================================================
+     CSC — geometrie reali (da _DEFAULT_SECTION_PARAMS di app.py,
+     More-T-section) e stile dei plot di SGMPy_section_v01 /
+     SGMPy_check.tension. Unità mm, y positiva verso il basso dalla
+     sommità della soletta (ascissa sull'altezza della sezione).
+     ============================================================ */
+  const GEO = {
+    Bcls: 3000, hcls: 230,                       // soletta
+    bPsup: 650, tPsup: 20, brPsup: 0, trPsup: 0, // piattabanda sup (+ raddoppio)
+    ha: 1250, ta: 10,                            // anima
+    bPinf: 800, tPinf: 25, brPinf: 0, trPinf: 0, // piattabanda inf (+ raddoppio)
+    phi_sup: 24, int_sup: 200, c_sup: 59,        // armatura sup
+    phi_inf: 24, int_inf: 200, c_inf: 28,        // armatura inf
+    d_piolo: 16, hsc: 150, nfp: 2, s_pioli: 250, // pioli Nelson
+    n_0: 6.16, n_inf: 15.2, n_r: 14.6            // rapporti modulari (default app)
+  };
+  const H_STEEL = GEO.tPsup + GEO.ha + GEO.tPinf;   // 1295
+  const H_TOT = GEO.hcls + H_STEEL;                 // 1525
+
+  /* quadro sezione: scala mm→px, asse y crescente verso il basso */
+  function secFrame(ox, oy, wpx) {
+    const s = wpx / (GEO.Bcls * 1.08);
+    return {
+      s,
+      px: (x_mm) => ox + (x_mm + GEO.Bcls / 2) * s,   // x centrata
+      py: (y_mm) => oy + y_mm * s
+    };
+  }
+  function drawBar(f, ctx2, x_mm, y_mm) {
+    const r = Math.max(1.8, GEO.phi_sup / 2 * f.s);
+    ctx2.beginPath();
+    ctx2.arc(f.px(x_mm), f.py(y_mm), r, 0, Math.PI * 2);
+    ctx2.fillStyle = PLOT.bar; ctx2.fill();
+    ctx2.lineWidth = 0.8; ctx2.strokeStyle = '#7a4008'; ctx2.stroke();
+  }
+  function drawNelsonStud(f, ctx2, x_mm) {
+    // Piolo Nelson sezionato (EN 1994-2): gambo d con testa ~2d in cima.
+    // Saldato sulla faccia superiore della piattabanda (y = hcls) e immerso
+    // nella soletta per hsc = 150 mm. Default app: d_piolo 16 · hsc 150.
+    const d = GEO.d_piolo, dh = 32, hh = 9;
+    const yBase = GEO.hcls;                    // faccia sup piattabanda
+    const yTop = yBase - GEO.hsc;              // cima gambo (nel cls)
+    const x = f.px(x_mm), s = f.s;
+    ctx2.fillStyle = 'rgba(31,119,180,0.35)';
+    ctx2.strokeStyle = PLOT.steel; ctx2.lineWidth = 1.4;
+    // gambo
+    ctx2.fillRect(x - d / 2 * s, f.py(yTop), d * s, GEO.hsc * s);
+    ctx2.strokeRect(x - d / 2 * s, f.py(yTop), d * s, GEO.hsc * s);
+    // testa
+    ctx2.fillRect(x - dh / 2 * s, f.py(yTop), dh * s, hh * s);
+    ctx2.strokeRect(x - dh / 2 * s, f.py(yTop), dh * s, hh * s);
+    // cordone di saldatura sulla piattabanda
+    ctx2.fillStyle = PLOT.steel;
+    ctx2.fillRect(x - 14 * s, f.py(yBase) - 3, 28 * s, 3);
+  }
+
+  function drawCompositeSection(f, ctx2, opts) {
+    opts = opts || {};
+    const withSlab = opts.slab !== false;
+    const cracked = !!opts.cracked;
+    // soletta (contorno calcestruzzo #111111 come _plot_style "concrete")
+    if (withSlab) {
+      const x0 = f.px(-GEO.Bcls / 2), y0 = f.py(0), w = GEO.Bcls * f.s, h = GEO.hcls * f.s;
+      ctx2.fillStyle = cracked ? 'rgba(17,17,17,0.06)' : 'rgba(17,17,17,0.10)';
+      ctx2.fillRect(x0, y0, w, h);
+      hatch(ctx2, x0, y0, w, h, 10, 'rgba(17,17,17,0.25)');
+      ctx2.strokeStyle = PLOT.concrete; ctx2.lineWidth = 1.4;
+      ctx2.strokeRect(x0, y0, w, h);
+      if (cracked) {
+        ctx2.strokeStyle = PLOT.removed; ctx2.lineWidth = 1.2;
+        for (let i = -4; i <= 4; i++) {
+          ctx2.beginPath();
+          ctx2.moveTo(f.px(i * 320), f.py(0));
+          ctx2.lineTo(f.px(i * 320 + 60), f.py(GEO.hcls));
+          ctx2.stroke();
+        }
+      }
+    }
+    // carpenteria metallica: piattabande + anima (stile "steel")
+    ctx2.fillStyle = 'rgba(31,119,180,0.14)';
+    ctx2.strokeStyle = PLOT.steel; ctx2.lineWidth = 1.6;
+    const y0 = GEO.hcls;
+    // piattabanda sup (+ raddoppio opzionale)
+    ctx2.fillRect(f.px(-GEO.bPsup / 2), f.py(y0), GEO.bPsup * f.s, GEO.tPsup * f.s);
+    ctx2.strokeRect(f.px(-GEO.bPsup / 2), f.py(y0), GEO.bPsup * f.s, GEO.tPsup * f.s);
+    if (GEO.brPsup > 0) {
+      ctx2.fillRect(f.px(-GEO.brPsup / 2), f.py(y0 + GEO.tPsup), GEO.brPsup * f.s, GEO.trPsup * f.s);
+      ctx2.strokeRect(f.px(-GEO.brPsup / 2), f.py(y0 + GEO.tPsup), GEO.brPsup * f.s, GEO.trPsup * f.s);
+    }
+    // anima
+    const yWeb = y0 + GEO.tPsup + GEO.brPsup;
+    ctx2.fillRect(f.px(-GEO.ta / 2), f.py(yWeb), GEO.ta * f.s, GEO.ha * f.s);
+    ctx2.strokeRect(f.px(-GEO.ta / 2), f.py(yWeb), GEO.ta * f.s, GEO.ha * f.s);
+    // piattabanda inf (+ raddoppio opzionale)
+    const yInf = yWeb + GEO.ha;
+    if (GEO.brPinf > 0) {
+      ctx2.fillRect(f.px(-GEO.brPinf / 2), f.py(yInf), GEO.brPinf * f.s, GEO.trPinf * f.s);
+      ctx2.strokeRect(f.px(-GEO.brPinf / 2), f.py(yInf), GEO.brPinf * f.s, GEO.trPinf * f.s);
+    }
+    ctx2.fillRect(f.px(-GEO.bPinf / 2), f.py(yInf + GEO.brPinf), GEO.bPinf * f.s, GEO.tPinf * f.s);
+    ctx2.strokeRect(f.px(-GEO.bPinf / 2), f.py(yInf + GEO.brPinf), GEO.bPinf * f.s, GEO.tPinf * f.s);
+
+    // pioli Nelson (nfp file, passo s_pioli lungo la trave)
+    if (opts.studs !== false) {
+      for (let i = 0; i < GEO.nfp; i++) {
+        const z = GEO.nfp === 1 ? 0 : (-GEO.bPsup / 2 + GEO.bPsup * (0.28 + 0.44 * i));
+        drawNelsonStud(f, ctx2, z);
+      }
+    }
+    // armature (renforcementBar → cerchi Øphi)
+    if (opts.bars !== false) {
+      const nSup = Math.floor(GEO.Bcls / GEO.int_sup);
+      const dSup = (GEO.Bcls - (nSup - 1) * GEO.int_sup) / 2;
+      for (let i = 0; i < nSup; i++) {
+        drawBar(f, ctx2, -(GEO.Bcls / 2 - dSup) + GEO.int_sup * i, GEO.c_sup);
+        drawBar(f, ctx2, -(GEO.Bcls / 2 - dSup) + GEO.int_sup * i, GEO.hcls - GEO.c_inf);
+      }
+    }
+    // baricentro (croce rossa come plotSection center=True)
+    if (opts.centroid !== false) {
+      const yg = opts.yg === undefined ? GEO.hcls + 430 : opts.yg;
+      const x = f.px(0), y = f.py(yg);
+      ctx2.strokeStyle = PLOT.baricentro; ctx2.lineWidth = 1.6;
+      ctx2.beginPath();
+      ctx2.moveTo(x - 7, y); ctx2.lineTo(x + 7, y);
+      ctx2.moveTo(x, y - 7); ctx2.lineTo(x, y + 7);
+      ctx2.stroke();
+    }
+  }
+
+  /* ---- profilo tensioni stile SGMPy_check.tension ------------------
+     Stessa ascissa y della sezione (hi_plot = quote reali in mm).
+     sigma* = profilo omogeneizzato (lineare); nel cls la tensione reale
+     vale sigma/n (n = rapporto modulare) — come g2_sigma[0]/ninf e
+     sigma_comp/modular_ratio — quindi un SALTO netto a y = hcls.
+     fill='tozeroy' come nel plot. */
+  function drawStressProfile(ctx2, b, prof, opts) {
+    opts = opts || {};
+    const n = opts.n || 1;
+    const sigMax = opts.sigMax || 170;
+    const x0 = b.x + b.w * 0.34;         // asse σ = 0 (fill tozeroy)
+    const px = (sig) => x0 + (sig / sigMax) * (b.w * 0.6);
+    const py = (y) => b.y + (y / H_TOT) * b.h;
+    // assi: stessa altezza della sezione
+    figAxes(ctx2, { x: b.x, y: b.y, w: b.w, h: b.h }, 'tensione [MPa]', 'ascissa sull\'altezza della sezione [mm]', { nx: 4, ny: 6 });
+    // asse σ = 0
+    ctx2.strokeStyle = '#000'; ctx2.lineWidth = 0.8;
+    ctx2.beginPath(); ctx2.moveTo(x0, b.y); ctx2.lineTo(x0, b.y + b.h); ctx2.stroke();
+
+    // profilo: lista di tratti [{y0,y1,s0,s1}] con possibili salti
+    const pts = [];
+    for (const tr of prof) {
+      pts.push([tr.s0, tr.y0], [tr.s1, tr.y1]);
+    }
+    // fill tozeroy
+    ctx2.beginPath();
+    ctx2.moveTo(x0, py(prof[0].y0));
+    for (const [s, y] of pts) ctx2.lineTo(px(s), py(y));
+    ctx2.lineTo(x0, py(prof[prof.length - 1].y1));
+    ctx2.closePath();
+    ctx2.fillStyle = 'rgba(99,110,250,0.18)';
+    ctx2.fill();
+    // linea profilo + salti + σ* di riferimento nel cls
+    ctx2.strokeStyle = PLOT.curve; ctx2.lineWidth = 2;
+    for (let i = 0; i < prof.length; i++) {
+      const tr = prof[i];
+      // zona cls: tratteggiata σ* = σ·n (cioè il valore che avrebbe la
+      // tensione senza omogeneizzazione): il divario con la linea piena
+      // mostra che nel calcestruzzo σ = σ*/n
+      if (n > 1.05 && tr.y1 <= GEO.hcls + 1) {
+        ctx2.setLineDash([5, 4]);
+        ctx2.strokeStyle = PLOT.annc; ctx2.lineWidth = 1.3;
+        ctx2.beginPath(); ctx2.moveTo(px(tr.s0 * n), py(tr.y0)); ctx2.lineTo(px(tr.s1 * n), py(tr.y1)); ctx2.stroke();
+        ctx2.setLineDash([]);
+        ctx2.strokeStyle = PLOT.curve; ctx2.lineWidth = 2;
+      }
+      ctx2.beginPath(); ctx2.moveTo(px(tr.s0), py(tr.y0)); ctx2.lineTo(px(tr.s1), py(tr.y1)); ctx2.stroke();
+      if (i < prof.length - 1) {
+        // salto di tensione all'interfaccia (σ* continua, σ no: /n nel cls)
+        ctx2.setLineDash([4, 3]);
+        ctx2.strokeStyle = PLOT.annc;
+        ctx2.beginPath(); ctx2.moveTo(px(tr.s1), py(tr.y1)); ctx2.lineTo(px(prof[i + 1].s0), py(prof[i + 1].y0)); ctx2.stroke();
+        ctx2.setLineDash([]);
+        ctx2.strokeStyle = PLOT.curve;
+      }
+    }
+    // barre: linea orizzontale 0 → σ_bar alla quota barra (come in tension())
+    if (opts.bars) {
+      for (const bar of opts.bars) {
+        ctx2.strokeStyle = 'orange'; ctx2.lineWidth = 2;
+        ctx2.beginPath(); ctx2.moveTo(x0, py(bar.y)); ctx2.lineTo(px(bar.s), py(bar.y)); ctx2.stroke();
+      }
+    }
+    // quote chiave (stessa altezza della sezione!)
+    ctx2.font = '9.5px ' + MONO; ctx2.fillStyle = PLOT.annc;
+    for (const [y, txt] of [[0, '0'], [GEO.hcls, '230'], [GEO.hcls + GEO.tPsup, '250'], [H_TOT - GEO.tPinf, '1500'], [H_TOT, '1525']]) {
+      ctx2.fillText(txt, b.x - 26, py(y) + 3);
+    }
+    // legenda omogeneizzazione
+    if (opts.nLabel !== false) {
+      ctx2.fillStyle = PLOT.annc;
+      ctx2.fillText('cls: σ = σ*/n', x0 + 8, py(GEO.hcls / 2) - 8);
+      if (n > 1.05) {
+        ctx2.fillText('--- σ* (senza omogeneizzazione)', x0 + 8, py(GEO.hcls / 2) + 6);
+      }
+      ctx2.fillText('acciaio: σ = σ*', px(0) + 14, py(GEO.hcls + 320));
+    }
+  }
+
+  /* ============================================================
+     CSC — STAGE 1 · FASI COSTRUTTIVE
+     ============================================================ */
+  const CSC_PHASES = [
+    { name: 'G1 · SOLO ACCIAIO', short: 'G1', n: 1.0, note: 'trave metallica in cantiere',
+      prof: [{ y0: GEO.hcls, y1: H_TOT, s0: -22, s1: 148 }], bars: [] },
+    { name: 'POST-GETTO · n₀', short: 'n₀', n: GEO.n_0, note: 'sezione trasformata breve durata',
+      prof: [{ y0: 0, y1: GEO.hcls, s0: -46 / GEO.n_0, s1: -20 / GEO.n_0 },
+             { y0: GEO.hcls, y1: H_TOT, s0: -20, s1: 120 }],
+      bars: [{ y: GEO.c_sup, s: -33 }, { y: GEO.hcls - GEO.c_inf, s: 88 }] },
+    { name: 'FLUAGE + RITIRO · n∞', short: 'n∞', n: GEO.n_inf, note: 'n∞ = n₀ (1 + φ)',
+      prof: [{ y0: 0, y1: GEO.hcls, s0: -58 / GEO.n_inf, s1: -26 / GEO.n_inf },
+             { y0: GEO.hcls, y1: H_TOT, s0: -26, s1: 98 }],
+      bars: [{ y: GEO.c_sup, s: -40 }, { y: GEO.hcls - GEO.c_inf, s: 74 }] },
+    { name: 'FESSURATO · SLE', short: 'SLE', n: GEO.n_inf, note: 'cls teso escluso + ritiro',
+      prof: [{ y0: 0, y1: GEO.hcls, s0: 0, s1: 0 },
+             { y0: GEO.hcls, y1: H_TOT, s0: 15, s1: 158 }],
+      bars: [{ y: GEO.c_sup, s: 24 }, { y: GEO.hcls - GEO.c_inf, s: 210 }] }
+  ];
   function drawPhaseStage(ctx2, W, H, lt, gt, st) {
     ctx2.clearRect(0, 0, W, H);
-    // fondo griglia
-    ctx2.strokeStyle = 'rgba(255,255,255,0.03)'; ctx2.lineWidth = 1;
-    for (let x = 0; x < W; x += 42) { ctx2.beginPath(); ctx2.moveTo(x, 0); ctx2.lineTo(x, H); ctx2.stroke(); }
-    for (let y = 0; y < H; y += 42) { ctx2.beginPath(); ctx2.moveTo(0, y); ctx2.lineTo(W, y); ctx2.stroke(); }
-
-    const seg = 5.2;                       // secondi per fase
+    const seg = 5.2;
     const idx = Math.floor(lt / seg) % CSC_PHASES.length;
     const ph = CSC_PHASES[idx];
-    const fp = ease(clamp01((lt % seg) / 1.1));  // progresso entrata fase
-    const prev = CSC_PHASES[(idx + CSC_PHASES.length - 1) % CSC_PHASES.length];
+    const fp = ease(clamp01((lt % seg) / 1.0));
 
-    const cx = W * 0.32, cy = H * 0.52, s = Math.min(W, H) * 0.135;
-
-    // slab: entra dalla fase 1
-    let slabA = 0, cracked = false;
-    if (idx === 0) slabA = 0.12;
-    else if (idx === 1) slabA = fp;
-    else { slabA = 1; cracked = (idx === 4); }
-    if (idx === 0) {
-      ctx2.setLineDash([6, 5]); drawSlab(ctx2, cx, cy, s, 0.18, false); ctx2.setLineDash([]);
-    } else drawSlab(ctx2, cx, cy, s, slabA, cracked);
-    drawSteelI(ctx2, cx, cy, s, 1);
-
+    // ---- pannello sezione (sx) ----
+    const secW = W * 0.44, secX = W * 0.03, secY = H * 0.06;
+    const bSec = figPanel(ctx2, secX, secY, secW, H * 0.86, 'Sezione trasformata — More-T-section');
+    // quadro in scala: altezza reale 1525 mm
+    const s = Math.min(bSec.w / (GEO.Bcls * 1.05), bSec.h / (H_TOT * 1.05));
+    // mappa verticale UNICA sezione ↔ diagramma: il diagramma deve coprire
+    // esattamente l'altezza della sezione (y = 0 … 1525 mm, come hi_plot in
+    // SGMPy_check.tension, che plotta sulle stesse quote hi della sezione)
+    const yTop = bSec.y + (bSec.h - H_TOT * s) / 2;
+    const f = {
+      s,
+      px: (x) => bSec.x + bSec.w / 2 + x * s,
+      py: (y) => yTop + y * s
+    };
+    ctx2.save();
+    ctx2.beginPath(); ctx2.rect(bSec.x - 4, bSec.y - 4, bSec.w + 8, bSec.h + 8); ctx2.clip();
+    drawCompositeSection(f, ctx2, {
+      slab: idx > 0,
+      cracked: idx === 3,
+      bars: idx > 0,
+      studs: idx > 0,
+      yg: GEO.hcls + 380
+    });
+    ctx2.restore();
+    figLegend(ctx2, bSec.x + bSec.w - 150, bSec.y + 8, [
+      [PLOT.steel, 'Acciaio carpenteria'],
+      [PLOT.concrete, 'Calcestruzzo'],
+      [PLOT.bar, 'Armatura']
+    ]);
     // quote
-    label(ctx2, 'soletta C30/37', cx - 2.4 * s, cy - 2.35 * s, 'rgba(138,138,154,1)', 10);
-    label(ctx2, 'doppio T S355', cx + 1.7 * s, cy + 1.5 * s, 'rgba(138,138,154,1)', 10);
+    ctx2.font = '9.5px ' + MONO; ctx2.fillStyle = PLOT.annc;
+    ctx2.fillText('Bcls 3000 · hcls 230', bSec.x + 6, bSec.y + bSec.h - 22);
+    ctx2.fillText('bPsup 650·20 · ha 1250·10 · bPinf 800·25', bSec.x + 6, bSec.y + bSec.h - 8);
+    ctx2.fillText('pioli Ø16 · h 150 · s 250 · 2 file', bSec.x + 6, bSec.y + 16);
+    ctx2.fillStyle = PLOT.baricentro;
+    ctx2.fillText('G (0, ' + (GEO.hcls + 380) + ')', f.px(14), f.py(GEO.hcls + 380) - 10);
 
-    // profilo tensionale a destra
-    const n = lerp(prev.n, ph.n, fp);
-    let sigTop, sigBot;
-    if (idx === 0) { sigTop = -18 * fp; sigBot = 145 * fp; }
-    else if (idx === 1) { sigTop = lerp(-18, -34, fp); sigBot = lerp(145, 96, fp); }
-    else if (idx === 2) { sigTop = lerp(-34, -48, fp); sigBot = lerp(96, 118, fp); }
-    else if (idx === 3) { sigTop = lerp(-48, -72, fp); sigBot = lerp(118, 92, fp); }
-    else { sigTop = lerp(-72, -8, fp); sigBot = lerp(92, 158, fp); }
-    drawStressProfile(ctx2, W * 0.72, H * 0.2, H * 0.82, sigTop, sigBot, 1);
+    // ---- pannello tensioni (dx) — STESSA mappa verticale della sezione ----
+    const tenW = W * 0.44, tenX = W * 0.52;
+    const bTen = figPanel(ctx2, tenX, secY, tenW, H * 0.86, 'Tensione sulla sezione');
+    // il diagramma spazia esattamente su y = 0 … H_TOT come la sezione
+    const b = { x: bTen.x + 30, y: yTop, w: bTen.w - 34, h: H_TOT * s };
+    // profilo interpolato con la transizione di fase
+    const prev = CSC_PHASES[(idx + CSC_PHASES.length - 1) % CSC_PHASES.length];
+    const prof = morphProfile(prev.prof, ph.prof, fp);
+    drawStressProfile(ctx2, b, prof, {
+      n: ph.n,
+      sigMax: 175,
+      bars: ph.bars
+    });
+    ctx2.font = '11px ' + MONO; ctx2.fillStyle = PLOT.titlec;
+    ctx2.fillText(ph.name, bTen.x + 8, secY + H * 0.86 - 26);
+    ctx2.font = '9.5px ' + MONO; ctx2.fillStyle = PLOT.annc;
+    ctx2.fillText(ph.note, bTen.x + 8, secY + H * 0.86 - 12);
 
-    // callout fase
-    label(ctx2, ph.name, W * 0.72, H * 0.1, '#00d4aa', 13);
-    label(ctx2, ph.note, W * 0.72, H * 0.1 + 18, 'rgba(138,138,154,1)', 10);
-
-    // HUD
     const ro = document.getElementById('ro1');
-    if (ro) ro.innerHTML = 'fase <b>' + ph.short + '</b> · n = <b>' + n.toFixed(2) + '</b> · σinf = <b>' + sigBot.toFixed(0) + '</b> MPa';
+    if (ro) ro.innerHTML = 'fase <b>' + ph.short + '</b> · n = <b>' + ph.n.toFixed(2) + '</b> · σ*inf = <b>' + (ph.prof.length ? ph.prof[ph.prof.length - 1].s1.toFixed(0) : '—') + '</b> MPa';
+  }
+  function morphProfile(a, b, t) {
+    // allinea i tratti per y e interpola le tensioni
+    const out = [];
+    const n = Math.max(a.length, b.length);
+    for (let i = 0; i < n; i++) {
+      const ta = a[Math.min(i, a.length - 1)], tb = b[Math.min(i, b.length - 1)];
+      out.push({
+        y0: lerp(ta.y0, tb.y0, t), y1: lerp(ta.y1, tb.y1, t),
+        s0: lerp(ta.s0, tb.s0, t), s1: lerp(ta.s1, tb.s1, t)
+      });
+    }
+    return out;
   }
 
   /* ============================================================
      CSC — STAGE 2 · FAMIGLIE DI SEZIONE
      ============================================================ */
   const FAMIGLIE = [
-    { key: 'DOPPIO T', branch: 'More-T-section', note: 'soletta + 2 pioli/ala · classe 1-4' },
-    { key: 'T IRRIGIDITO', branch: 'More-T-irrigidita', note: 'nervature piatto/T/canaletta' },
-    { key: 'CASSONE', branch: 'More-Cassone', note: '3 anime · q = Mt/(2·Am)' }
+    { key: 'DOPPIO T', branch: 'composite-more-t-section', note: 'soletta + pioli Nelson · classi 1-4' },
+    { key: 'T IRRIGIDITO', branch: 'irrigiditi d\'anima', note: 'nervature piatto / T / canaletta (§4.5)' },
+    { key: 'CASSONE', branch: 'composite-more-cassone', note: 'anime inclinate · q = Mt/(2·Am)' }
   ];
-  function drawFamilyIT(ctx2, cx, cy, s, stiff, a) {
-    ctx2.globalAlpha = a;
-    drawSlab(ctx2, cx, cy, s, 1, false);
-    drawSteelI(ctx2, cx, cy, s, 1);
-    if (stiff) {
-      ctx2.fillStyle = '#00d4aa';
-      const wh = 2.6 * s, ww = 0.14 * s;
-      for (const yy of [-0.32, 0.0, 0.32]) {
-        ctx2.fillRect(cx + ww / 2, cy + yy * wh - 2.2, 0.5 * s, 4.4);
-        ctx2.fillRect(cx - ww / 2 - 0.5 * s, cy + yy * wh - 2.2, 0.5 * s, 4.4);
+  function drawStiffenedWeb(f, ctx2, tipo, xWeb, yTop, yBot, lato) {
+    // nervature da _rettangoli_irrigidimento (Web_ribs):
+    // piatto b×t sporgente; T con ala in punta; canaletta gambe + fondo.
+    const s = f.s, b_irr = 220, t_irr = 12, bf = 160, tf = 12;
+    const xs = lato * (GEO.ta / 2);       // faccia dell'anima
+    ctx2.fillStyle = 'rgba(31,119,180,0.35)';
+    ctx2.strokeStyle = PLOT.steel; ctx2.lineWidth = 1.3;
+    const ys = [0.28, 0.55, 0.8];
+    for (const r of ys) {
+      const y = lerp(yTop, yBot, r);
+      const yb = f.py(y), xp = f.px(xWeb + xs);
+      if (tipo === 'T') {
+        // anima del T (sporgente) + ala in punta
+        ctx2.fillRect(xp, yb - t_irr / 2 * s, lato * b_irr * s * 0.7, t_irr * s);
+        ctx2.strokeRect(xp, yb - t_irr / 2 * s, lato * b_irr * s * 0.7, t_irr * s);
+        const xTip = xp + lato * b_irr * s * 0.7;
+        ctx2.fillRect(lato > 0 ? xTip : xTip - tf * s, yb - bf / 2 * s, tf * s, bf * s);
+        ctx2.strokeRect(lato > 0 ? xTip : xTip - tf * s, yb - bf / 2 * s, tf * s, bf * s);
+      } else if (tipo === 'U') {
+        // canaletta: due gambe + fondo di chiusura
+        ctx2.fillRect(xp, yb - bf / 2 * s, lato * b_irr * s * 0.55, t_irr * s);
+        ctx2.strokeRect(xp, yb - bf / 2 * s, lato * b_irr * s * 0.55, t_irr * s);
+        ctx2.fillRect(xp, yb + bf / 2 * s - t_irr * s, lato * b_irr * s * 0.55, t_irr * s);
+        ctx2.strokeRect(xp, yb + bf / 2 * s - t_irr * s, lato * b_irr * s * 0.55, t_irr * s);
+        const xTip = xp + lato * b_irr * s * 0.55;
+        ctx2.fillRect(lato > 0 ? xTip - t_irr * s : xTip, yb - bf / 2 * s, t_irr * s, bf * s);
+        ctx2.strokeRect(lato > 0 ? xTip - t_irr * s : xTip, yb - bf / 2 * s, t_irr * s, bf * s);
+      } else {
+        // piatto sporgente
+        ctx2.fillRect(xp, yb - t_irr / 2 * s, lato * b_irr * s * 0.8, t_irr * s);
+        ctx2.strokeRect(xp, yb - t_irr / 2 * s, lato * b_irr * s * 0.8, t_irr * s);
       }
-      label(ctx2, 'irrigidimenti longitudinali', cx + 2.0 * s, cy - 0.35 * wh, 'rgba(0,212,170,0.9)', 9);
     }
-    ctx2.globalAlpha = 1;
   }
-  function drawFamilyCassone(ctx2, cx, cy, s, a) {
-    ctx2.globalAlpha = a;
+  function drawFamilyIT(ctx2, f, stiff) {
     // soletta
-    const hw = 2.6 * s;
-    ctx2.fillStyle = '#6b6f7a';
-    ctx2.fillRect(cx - hw, cy - 2.2 * s, 2 * hw, 0.42 * s);
-    hatch(ctx2, cx - hw, cy - 2.2 * s, 2 * hw, 0.42 * s, 9, 'rgba(240,240,245,0.28)');
-    ctx2.strokeStyle = 'rgba(0,212,170,0.85)'; ctx2.lineWidth = 1.6;
-    ctx2.strokeRect(cx - hw, cy - 2.2 * s, 2 * hw, 0.42 * s);
-    // cassone trapezoidale: 2 anime esterne inclinate + 1 interna
-    ctx2.fillStyle = '#3a3f4a';
-    const yT = cy - 1.78 * s, yB = cy + 1.5 * s;
-    const pts = [
-      // piattabanda sup
-      [cx - 2.2 * s, yT], [cx + 2.2 * s, yT], [cx + 2.2 * s, yT + 0.18 * s], [cx - 2.2 * s, yT + 0.18 * s]
-    ];
-    poly(ctx2, pts, '#3a3f4a', 'rgba(0,212,170,0.85)', 1.6);
-    // anima esterna sx inclinata
-    poly(ctx2, [[cx - 2.2 * s, yT], [cx - 2.2 * s, yT + 0.18 * s], [cx - 1.3 * s, yB], [cx - 1.55 * s, yB]], '#2a2e37', 'rgba(0,212,170,0.85)', 1.5);
-    // anima esterna dx
-    poly(ctx2, [[cx + 2.2 * s, yT], [cx + 2.2 * s, yT + 0.18 * s], [cx + 1.55 * s, yB], [cx + 1.3 * s, yB]], '#2a2e37', 'rgba(0,212,170,0.85)', 1.5);
-    // anima interna
-    ctx2.fillRect(cx - 0.09 * s, yT, 0.18 * s, yB - yT);
-    ctx2.strokeRect(cx - 0.09 * s, yT, 0.18 * s, yB - yT);
-    // piattabanda inf
-    poly(ctx2, [[cx - 1.55 * s, yB], [cx + 1.55 * s, yB], [cx + 1.55 * s, yB + 0.18 * s], [cx - 1.55 * s, yB + 0.18 * s]], '#3a3f4a', 'rgba(0,212,170,0.85)', 1.6);
-    // ribs su piattabanda
-    ctx2.fillStyle = '#00d4aa';
-    for (const xx of [-1.6, -0.8, 0.8, 1.6]) {
-      ctx2.fillRect(cx + xx * s - 1.5, yT + 0.18 * s, 3, 0.34 * s);
+    const x0 = f.px(-GEO.Bcls / 2), y0 = f.py(0), w = GEO.Bcls * f.s, h = GEO.hcls * f.s;
+    ctx2.fillStyle = 'rgba(17,17,17,0.10)'; ctx2.fillRect(x0, y0, w, h);
+    hatch(ctx2, x0, y0, w, h, 10, 'rgba(17,17,17,0.25)');
+    ctx2.strokeStyle = PLOT.concrete; ctx2.lineWidth = 1.4; ctx2.strokeRect(x0, y0, w, h);
+    // trave
+    ctx2.fillStyle = 'rgba(31,119,180,0.14)';
+    ctx2.strokeStyle = PLOT.steel; ctx2.lineWidth = 1.6;
+    const yS = GEO.hcls;
+    ctx2.fillRect(f.px(-GEO.bPsup / 2), f.py(yS), GEO.bPsup * f.s, GEO.tPsup * f.s);
+    ctx2.strokeRect(f.px(-GEO.bPsup / 2), f.py(yS), GEO.bPsup * f.s, GEO.tPsup * f.s);
+    ctx2.fillRect(f.px(-GEO.ta / 2), f.py(yS + GEO.tPsup), GEO.ta * f.s, GEO.ha * f.s);
+    ctx2.strokeRect(f.px(-GEO.ta / 2), f.py(yS + GEO.tPsup), GEO.ta * f.s, GEO.ha * f.s);
+    ctx2.fillRect(f.px(-GEO.bPinf / 2), f.py(yS + GEO.tPsup + GEO.ha), GEO.bPinf * f.s, GEO.tPinf * f.s);
+    ctx2.strokeRect(f.px(-GEO.bPinf / 2), f.py(yS + GEO.tPsup + GEO.ha), GEO.bPinf * f.s, GEO.tPinf * f.s);
+    if (stiff) {
+      drawStiffenedWeb(f, ctx2, 'piatto', 0, yS + GEO.tPsup, yS + GEO.tPsup + GEO.ha, 1);
+      drawStiffenedWeb(f, ctx2, 'T', 0, yS + GEO.tPsup, yS + GEO.tPsup + GEO.ha, -1);
     }
+    // pioli + barre
+    for (let i = 0; i < GEO.nfp; i++) drawNelsonStud(f, ctx2, -GEO.bPsup / 2 + GEO.bPsup * (0.28 + 0.44 * i));
+  }
+  function drawFamilyCassone(ctx2, f) {
+    // cassone trapezoidale a 3 anime (More-Cassone): piattabande con
+    // OrizontalPlate, anime con WebPlate inclinato di alpha_est.
+    const alpha = 6 * Math.PI / 180;
+    ctx2.fillStyle = 'rgba(31,119,180,0.14)';
+    ctx2.strokeStyle = PLOT.steel; ctx2.lineWidth = 1.6;
+    const yS = GEO.hcls;
+    // soletta
+    ctx2.fillStyle = 'rgba(17,17,17,0.10)';
+    ctx2.fillRect(f.px(-GEO.Bcls / 2), f.py(0), GEO.Bcls * f.s, GEO.hcls * f.s);
+    hatch(ctx2, f.px(-GEO.Bcls / 2), f.py(0), GEO.Bcls * f.s, GEO.hcls * f.s, 10, 'rgba(17,17,17,0.25)');
+    ctx2.strokeStyle = PLOT.concrete; ctx2.lineWidth = 1.4;
+    ctx2.strokeRect(f.px(-GEO.Bcls / 2), f.py(0), GEO.Bcls * f.s, GEO.hcls * f.s);
+    ctx2.strokeStyle = PLOT.steel;
+    ctx2.fillStyle = 'rgba(31,119,180,0.14)';
+    // 3 piattabande superiori distinte (n_piatt_sup = 3)
+    const pW = 900, zs = [-1050, 0, 1050];
+    for (const z of zs) {
+      ctx2.fillRect(f.px(z - pW / 2), f.py(yS), pW * f.s, 20 * f.s);
+      ctx2.strokeRect(f.px(z - pW / 2), f.py(yS), pW * f.s, 20 * f.s);
+    }
+    // anime: 2 esterne inclinate + 1 interna verticale
+    const hw = 1150, tw = 14;
+    function web(xTop, xBot, y0w, y1w) {
+      const p = [];
+      const th = tw / 2;
+      p.push([xTop - th, y0w], [xTop + th, y0w], [xBot + th, y1w], [xBot - th, y1w]);
+      ctx2.beginPath();
+      ctx2.moveTo(f.px(p[0][0]), f.py(p[0][1]));
+      for (let i = 1; i < p.length; i++) ctx2.lineTo(f.px(p[i][0]), f.py(p[i][1]));
+      ctx2.closePath();
+      ctx2.fill(); ctx2.stroke();
+    }
+    const y0w = yS + 20, y1w = yS + 20 + hw;
+    web(-1050, -1050 + hw * Math.tan(alpha), y0w, y1w);
+    web(1050, 1050 - hw * Math.tan(alpha), y0w, y1w);
+    web(0, 0, y0w, y1w);
+    // piattabande inferiori
+    ctx2.fillRect(f.px(-620), f.py(y1w), 560 * f.s, 25 * f.s);
+    ctx2.strokeRect(f.px(-620), f.py(y1w), 560 * f.s, 25 * f.s);
+    ctx2.fillRect(f.px(60), f.py(y1w), 560 * f.s, 25 * f.s);
+    ctx2.strokeRect(f.px(60), f.py(y1w), 560 * f.s, 25 * f.s);
+    // irrigidimenti di piattabanda (V_rib)
+    ctx2.fillStyle = 'rgba(31,119,180,0.4)';
+    for (const z of zs) for (const dx of [-260, 260]) {
+      ctx2.fillRect(f.px(z + dx) - 4, f.py(yS + 20), 8, 90 * f.s);
+    }
+    // pioli sulle piattabande superiori
+    for (const z of zs) drawNelsonStud(f, ctx2, z);
     // flusso torsionale
-    ctx2.setLineDash([4, 4]);
+    ctx2.setLineDash([5, 4]);
     ctx2.strokeStyle = 'rgba(242,200,44,0.9)';
-    ctx2.strokeRect(cx - 1.35 * s, yT + 0.3 * s, 2.7 * s, yB - yT - 0.35 * s);
+    ctx2.lineWidth = 1.2;
+    ctx2.beginPath();
+    ctx2.moveTo(f.px(-1040), f.py(y0w + 30));
+    ctx2.lineTo(f.px(1040), f.py(y0w + 30));
+    ctx2.lineTo(f.px(500), f.py(y1w - 40));
+    ctx2.lineTo(f.px(-500), f.py(y1w - 40));
+    ctx2.closePath();
+    ctx2.stroke();
     ctx2.setLineDash([]);
-    label(ctx2, 'Am', cx - 0.3 * s, cy, 'rgba(242,200,44,0.9)', 11);
-    label(ctx2, 'irrigidimenti piattabanda', cx - 2.5 * s, yT - 10, 'rgba(0,212,170,0.9)', 9);
-    ctx2.globalAlpha = 1;
+    ctx2.font = '9.5px ' + MONO; ctx2.fillStyle = 'rgba(180,140,20,1)';
+    ctx2.fillText('Am · q = Mt/(2·Am)', f.px(-380), f.py((y0w + y1w) / 2));
   }
   function drawFamilyStage(ctx2, W, H, lt, gt, st) {
     ctx2.clearRect(0, 0, W, H);
-    ctx2.strokeStyle = 'rgba(255,255,255,0.03)'; ctx2.lineWidth = 1;
-    for (let x = 0; x < W; x += 42) { ctx2.beginPath(); ctx2.moveTo(x, 0); ctx2.lineTo(x, H); ctx2.stroke(); }
-    for (let y = 0; y < H; y += 42) { ctx2.beginPath(); ctx2.moveTo(0, y); ctx2.lineTo(W, y); ctx2.stroke(); }
-
     const seg = 7.5;
     const idx = Math.floor(lt / seg) % FAMIGLIE.length;
-    const f = FAMIGLIE[idx];
-    const fp = ease(clamp01((lt % seg) / 1.0));
-    const cx = W * 0.42, cy = H * 0.54, s = Math.min(W, H) * 0.145;
+    const f0 = FAMIGLIE[idx];
+    const fp = ease(clamp01((lt % seg) / 0.9));
 
-    if (idx === 0) drawFamilyIT(ctx2, cx, cy, s, false, fp);
-    else if (idx === 1) drawFamilyIT(ctx2, cx, cy, s, true, fp);
-    else drawFamilyCassone(ctx2, cx, cy, s, fp);
+    const secW = W * 0.46, secX = W * 0.03, secY = H * 0.06;
+    const bSec = figPanel(ctx2, secX, secY, secW, H * 0.86, 'Famiglie di sezione — CompositeSectionCheck');
+    const s = Math.min(bSec.w / (GEO.Bcls * 1.05), bSec.h / (H_TOT * 1.05));
+    // mappa verticale UNICA sezione ↔ diagramma: il diagramma deve coprire
+    // esattamente l'altezza della sezione (y = 0 … 1525 mm, come hi_plot in
+    // SGMPy_check.tension, che plotta sulle stesse quote hi della sezione)
+    const yTop = bSec.y + (bSec.h - H_TOT * s) / 2;
+    const f = {
+      s,
+      px: (x) => bSec.x + bSec.w / 2 + x * s,
+      py: (y) => yTop + y * s
+    };
+    ctx2.save();
+    ctx2.beginPath(); ctx2.rect(bSec.x - 4, bSec.y - 4, bSec.w + 8, bSec.h + 8); ctx2.clip();
+    ctx2.globalAlpha = fp;
+    if (idx === 0) drawFamilyIT(ctx2, f, false);
+    else if (idx === 1) drawFamilyIT(ctx2, f, true);
+    else drawFamilyCassone(ctx2, f);
+    ctx2.globalAlpha = 1;
+    ctx2.restore();
+    figLegend(ctx2, bSec.x + bSec.w - 150, bSec.y + 8, [
+      [PLOT.steel, 'Acciaio carpenteria'],
+      [PLOT.concrete, 'Calcestruzzo'],
+      [PLOT.bar, 'Armatura']
+    ]);
 
-    // pannello info destro
-    label(ctx2, f.key, W * 0.72, H * 0.3, '#00d4aa', 15);
-    label(ctx2, f.branch, W * 0.72, H * 0.3 + 22, 'rgba(240,240,245,0.9)', 11);
-    label(ctx2, f.note, W * 0.72, H * 0.3 + 42, 'rgba(138,138,154,1)', 10);
+    // pannello info
+    const bInfo = figPanel(ctx2, W * 0.54, secY, W * 0.42, H * 0.86, 'Branch & funzionalità');
+    ctx2.font = '700 22px -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+    ctx2.fillStyle = PLOT.titlec;
+    ctx2.fillText(f0.key, bInfo.x + 4, bInfo.y + 40);
+    ctx2.font = '12px ' + MONO; ctx2.fillStyle = PLOT.curve;
+    ctx2.fillText('app · ' + f0.branch, bInfo.x + 4, bInfo.y + 66);
+    ctx2.font = '12px -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+    ctx2.fillStyle = PLOT.annc;
+    ctx2.fillText(f0.note, bInfo.x + 4, bInfo.y + 92);
+    // dettaglio per famiglia
+    const det = [
+      ['piattabande saldate + raddoppi', 'bPsup 650·20 · bPinf 800·25'],
+      ['nervature piatto / T / canaletta', 'EN 1993-1-5 §4.5 · k_τ con ribs'],
+      ['anime esterne inclinate alpha_est', '2 V_Rd,est + naint·V_Rd,int']
+    ][idx];
+    ctx2.font = '11px ' + MONO; ctx2.fillStyle = PLOT.titlec;
+    ctx2.fillText('· ' + det[0], bInfo.x + 4, bInfo.y + 130);
+    ctx2.fillStyle = PLOT.annc;
+    ctx2.fillText('· ' + det[1], bInfo.x + 4, bInfo.y + 150);
+    ctx2.fillText('· fasi: G1 · G2 · ritiro · fessurato', bInfo.x + 4, bInfo.y + 178);
+    ctx2.fillText('· verifiche: SLU · SLE · fatica · pioli', bInfo.x + 4, bInfo.y + 198);
 
     const famEl = document.getElementById('famName');
-    if (famEl) famEl.textContent = f.key;
+    if (famEl) famEl.textContent = f0.key;
     const ro = document.getElementById('ro2');
-    if (ro) ro.innerHTML = 'branch <b>' + f.branch + '</b> · multi-sezione Excel';
+    if (ro) ro.innerHTML = 'app <b>' + f0.branch + '</b> · multi-sezione Excel';
   }
 
   /* ============================================================
@@ -1200,56 +1581,54 @@
   const CSC_CHECKS = [
     { name: 'SLU flessione M+',  u: 0.62, tag: 'elastica + plastica' },
     { name: 'SLU taglio V',      u: 0.48, tag: 'k_τ EN 1993-1-5' },
-    { name: 'Interazione M-V',   u: 0.55, tag: 'EN 1992-1-1 §6.2.3' },
-    { name: 'Pioli Nelson',      u: 0.71, tag: 'scorrimento SLU' },
-    { name: 'Saldature gola',    u: 0.40, tag: 'Jourawski' },
-    { name: 'Fatica ζ',          u: 0.33, tag: 'web breathing' }
+    { name: 'Interazione M-V',   u: 0.55, tag: 'EN 1992-1-1 §7.1' },
+    { name: 'Pioli Nelson',      u: 0.71, tag: 'P_Rd · n pioli/m' },
+    { name: 'Cordoni di gola',   u: 0.40, tag: 'Jourawski · a_gola 6' },
+    { name: 'Web breathing ζ',   u: 0.33, tag: 'fatica · gamma_Mf' }
   ];
   function drawCheckStage(ctx2, W, H, lt, gt, st) {
     ctx2.clearRect(0, 0, W, H);
-    ctx2.strokeStyle = 'rgba(255,255,255,0.03)'; ctx2.lineWidth = 1;
-    for (let x = 0; x < W; x += 42) { ctx2.beginPath(); ctx2.moveTo(x, 0); ctx2.lineTo(x, H); ctx2.stroke(); }
-    for (let y = 0; y < H; y += 42) { ctx2.beginPath(); ctx2.moveTo(0, y); ctx2.lineTo(W, y); ctx2.stroke(); }
-
+    const b = figPanel(ctx2, W * 0.03, H * 0.06, W * 0.56, H * 0.86, 'Tabelle di sintesi — verifiche per sezione');
     const cycle = 13;
     const lp = lt % cycle;
-    const x0 = W * 0.08, y0 = H * 0.16, rowH = Math.min(52, H * 0.105), bw = W * 0.44;
+    const x0 = b.x + 4, y0 = b.y + 16, rowH = Math.min(52, b.h / 7.2), bw = b.w * 0.5;
     let maxU = 0;
-
-    label(ctx2, 'VERIFICHE · UTILIZZO D/C', x0, y0 - 22, '#00d4aa', 12);
+    ctx2.font = '10px ' + MONO; ctx2.fillStyle = PLOT.annc;
+    ctx2.fillText('utilizzo D/C — soglia 1.0', x0, y0 - 4);
 
     CSC_CHECKS.forEach((c, i) => {
       const appear = ease(clamp01((lp - i * 0.55) / 0.9));
       if (appear <= 0) return;
-      const y = y0 + i * rowH;
+      const y = y0 + 18 + i * rowH;
       const fill = c.u * appear * ease(clamp01((lp - 1.2 - i * 0.4) / 2.2));
       maxU = Math.max(maxU, c.u * Math.min(1, Math.max(0, (lp - 1.2 - i * 0.4) / 2.2)));
       ctx2.globalAlpha = appear;
-      label(ctx2, c.name, x0, y + 4, 'rgba(240,240,245,0.92)', 12);
-      label(ctx2, c.tag, x0, y + 20, 'rgba(138,138,154,1)', 9);
-      // bar
-      ctx2.fillStyle = 'rgba(255,255,255,0.06)';
-      ctx2.fillRect(x0 + 200, y - 8, bw, 18);
-      const col = fill > 0.85 ? '#f67820' : (fill > 0.65 ? '#f2c82c' : '#00d4aa');
-      ctx2.fillStyle = col;
-      ctx2.fillRect(x0 + 200, y - 8, bw * clamp01(fill), 18);
-      ctx2.strokeStyle = 'rgba(255,255,255,0.12)';
-      ctx2.strokeRect(x0 + 200, y - 8, bw, 18);
-      // soglia 1.0
-      ctx2.strokeStyle = 'rgba(235,52,42,0.55)';
+      ctx2.font = '11.5px -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+      ctx2.fillStyle = PLOT.titlec;
+      ctx2.fillText(c.name, x0, y + 4);
+      ctx2.font = '9.5px ' + MONO; ctx2.fillStyle = PLOT.annc;
+      ctx2.fillText(c.tag, x0, y + 18);
+      ctx2.fillStyle = PLOT.grid;
+      ctx2.fillRect(x0 + 210, y - 8, bw, 16);
+      ctx2.fillStyle = fill > 0.85 ? PLOT.removed : (fill > 0.65 ? 'orange' : PLOT.curve);
+      ctx2.fillRect(x0 + 210, y - 8, bw * clamp01(fill), 16);
+      ctx2.strokeStyle = '#ccc'; ctx2.lineWidth = 1;
+      ctx2.strokeRect(x0 + 210, y - 8, bw, 16);
+      ctx2.strokeStyle = PLOT.removed;
       ctx2.setLineDash([3, 3]);
-      ctx2.beginPath(); ctx2.moveTo(x0 + 200 + bw, y - 12); ctx2.lineTo(x0 + 200 + bw, y + 14); ctx2.stroke();
+      ctx2.beginPath(); ctx2.moveTo(x0 + 210 + bw, y - 12); ctx2.lineTo(x0 + 210 + bw, y + 12); ctx2.stroke();
       ctx2.setLineDash([]);
       if (appear > 0.9) {
         const ok = c.u < 1;
-        label(ctx2, (c.u * 100).toFixed(0) + '% ' + (ok ? '✓' : '✗'), x0 + 210 + bw, y + 5, ok ? '#00d4aa' : '#eb342a', 11);
+        ctx2.font = '10.5px ' + MONO;
+        ctx2.fillStyle = ok ? PLOT.dentro : PLOT.fuori;
+        ctx2.fillText((c.u * 100).toFixed(0) + '% ' + (ok ? '✓' : '✗'), x0 + 220 + bw, y + 4);
       }
       ctx2.globalAlpha = 1;
     });
 
-    // side: sintesi report
-    const rx = W * 0.78, ry = H * 0.3;
-    label(ctx2, 'RELAZIONE .DOCX', rx, ry - 24, '#00d4aa', 12);
+    // report (dx)
+    const bR = figPanel(ctx2, W * 0.62, H * 0.06, W * 0.34, H * 0.86, 'Relazione .docx — SGMPy_word');
     const lines = [
       'Tabelle di sintesi M+ / M−',
       'Utilizzi per lamiera (fyd)',
@@ -1260,13 +1639,17 @@
     lines.forEach((t, i) => {
       const ap = clamp01((lp - 3 - i * 0.5) / 0.6);
       ctx2.globalAlpha = ap;
-      label(ctx2, (ap > 0.95 ? '✓ ' : '· ') + t, rx, ry + i * 24, ap > 0.95 ? 'rgba(240,240,245,0.92)' : 'rgba(138,138,154,0.8)', 10.5);
+      ctx2.font = '11.5px -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+      ctx2.fillStyle = ap > 0.95 ? PLOT.titlec : PLOT.annc;
+      ctx2.fillText((ap > 0.95 ? '✓ ' : '· ') + t, bR.x + 4, bR.y + 26 + i * 26);
       ctx2.globalAlpha = 1;
     });
     if (lp > 7) {
       const blink = Math.sin(gt * 5) > -0.2 ? 1 : 0.45;
       ctx2.globalAlpha = blink;
-      label(ctx2, '▸ SGMPy_word · report pronto', rx, ry + 5 * 24 + 10, '#00d4aa', 11);
+      ctx2.font = '11px ' + MONO;
+      ctx2.fillStyle = PLOT.dentro;
+      ctx2.fillText('▸ Relazione_T.docx pronta', bR.x + 4, bR.y + 26 + 5 * 26 + 14);
       ctx2.globalAlpha = 1;
     }
 
@@ -1275,37 +1658,38 @@
   }
 
   /* ============================================================
-     CSC — TERMINALI DEMO
+     CSC — TERMINALI DEMO (app CivilBox, niente GitHub)
      ============================================================ */
   const SITE_TERMINAL = [
-    { type: 'input', text: 'git clone -b More-T-section CompositeSectionCheck' },
-    { type: 'output', text: '✓ branch di riferimento · doppio T composto' },
-    { type: 'input', text: 'streamlit run app.py' },
+    { type: 'input', text: 'apps.civilbox.xyz/composite-more-t-section' },
+    { type: 'output', text: '✓ app CivilBox · doppio T composto multi-sezione' },
+    { type: 'input', text: 'carica Dati_Input_T_multi.xlsx' },
     { type: 'output', text: '✓ caricato: Dati_Input_T_multi.xlsx' },
     { type: 'output', text: '  ├─ sezioni: 12  · azioni: G1 G2 R MQ Mfat' },
     { type: 'output', text: '  ├─ fasi: acciaio · getto · post · n∞ · fessurato' },
     { type: 'input', text: 'verifica --code NTC2018 --combo slu,rara,freq,qp' },
     { type: 'output', text: '✓ classi sezionali: 2 · 3 · 4 (efficace EN 1993-1-5)' },
+    { type: 'output', text: '✓ tensioni σ/n nel cls · salto all\'interfaccia' },
     { type: 'output', text: '✓ flessione M+ M− · taglio k_τ · interazione M-V' },
     { type: 'output', text: '✓ pioli Nelson · cordoni Jourawski · fatica ζ' },
     { type: 'output-accent', text: '  └─ esito: TUTTE LE SEZIONI OK  ✓' },
-    { type: 'input', text: 'genera_report.py --formato word' },
-    { type: 'output', text: '✓ Relazione_Composita.docx · 34 pagine' },
+    { type: 'input', text: 'report --formato word' },
+    { type: 'output', text: '✓ Relazione_T.docx · 34 pagine' },
   ];
   async function runTerm1() {
-    await typeInto(document.getElementById('t1cmd'), 'csc fasi --da G1 --a fessurato', 42);
+    await typeInto(document.getElementById('t1cmd'), 'fasi --da G1 --a fessurato', 42);
     await sleep(500); showOut('t1out1');
     await sleep(1200); showOut('t1out2');
     await sleep(1400); showOut('t1out3');
   }
   async function runTerm2() {
-    await typeInto(document.getElementById('t2cmd'), 'csc famiglie --tutto', 42);
+    await typeInto(document.getElementById('t2cmd'), 'famiglie --tutto', 42);
     await sleep(500); showOut('t2out1');
     await sleep(1300); showOut('t2out2');
     await sleep(1400); showOut('t2out3');
   }
   async function runTerm3() {
-    await typeInto(document.getElementById('t3cmd'), 'csc verifica --slu --sle --fatica --report', 42);
+    await typeInto(document.getElementById('t3cmd'), 'verifica --slu --sle --fatica --report', 42);
     await sleep(500); showOut('t3out1');
     await sleep(1300); showOut('t3out2');
     await sleep(1300); showOut('t3out3');
@@ -1320,23 +1704,18 @@
   }
   function buildBeam3D(scene, state) {
     const g = new THREE.Group();
-    // soletta
-    const slab = beamSolid(9, 0.7, 3.2, 0x8a8f9a); slab.position.set(0, 3.1, 0); g.add(slab);
-    // trave I
-    const ft = beamSolid(3.4, 0.45, 3.0, 0x3a404c); ft.position.set(0, 2.45, 0); g.add(ft);
-    const fb = beamSolid(3.0, 0.45, 3.0, 0x3a404c); fb.position.set(0, -1.6, 0); g.add(fb);
-    const web = beamSolid(0.35, 3.7, 3.0, 0x2a2e37); web.position.set(0, 0.55, 0); g.add(web);
-    // pioli
+    const slab = beamSolid(12, 1.2, 3.4, 0x8a8f9a); slab.position.set(0, 3.4, 0); g.add(slab);
+    const ft = beamSolid(4.2, 0.35, 3.0, 0x2f6fb0); ft.position.set(0, 2.6, 0); g.add(ft);
+    const fb = beamSolid(5.0, 0.35, 3.0, 0x2f6fb0); fb.position.set(0, -1.5, 0); g.add(fb);
+    const web = beamSolid(0.3, 3.8, 3.0, 0x2a5f96); web.position.set(0, 0.6, 0); g.add(web);
     for (let i = -3; i <= 3; i++) {
-      const stud = beamSolid(0.14, 0.5, 0.14, 0x00d4aa);
-      stud.position.set(i * 1.0, 2.7, 0); g.add(stud);
+      const shaft = beamSolid(0.12, 0.75, 0.12, 0x2f6fb0); shaft.position.set(i * 1.2, 3.0, 0); g.add(shaft);
+      const head = beamSolid(0.26, 0.1, 0.26, 0x2f6fb0); head.position.set(i * 1.2, 3.35, 0); g.add(head);
     }
     scene.add(g);
-    state.update = (t) => { g.rotation.y = 0; };
   }
   function buildFamilies3D(scene, state) {
     const g = new THREE.Group();
-    // cassone trapezoidale estruso
     const shape = new THREE.Shape();
     shape.moveTo(-3.2, 1.8); shape.lineTo(3.2, 1.8); shape.lineTo(2.2, -1.6); shape.lineTo(-2.2, -1.6); shape.lineTo(-3.2, 1.8);
     const hole = new THREE.Path();
@@ -1344,19 +1723,18 @@
     shape.holes.push(hole);
     const ext = new THREE.ExtrudeGeometry(shape, { depth: 8, bevelEnabled: false });
     ext.translate(0, 0, -4);
-    const mesh = new THREE.Mesh(ext, new THREE.MeshPhongMaterial({ color: 0x3a404c, transparent: true, opacity: 0.9 }));
+    const mesh = new THREE.Mesh(ext, new THREE.MeshPhongMaterial({ color: 0x2f6fb0, transparent: true, opacity: 0.85 }));
     g.add(mesh);
     const slab = beamSolid(8.4, 0.55, 8, 0x8a8f9a); slab.position.set(0, 2.05, 0); g.add(slab);
-    const web2 = beamSolid(0.3, 3.3, 8, 0x2a2e37); web2.position.set(0, 0.05, 0); g.add(web2);
+    const web2 = beamSolid(0.3, 3.3, 8, 0x2a5f96); web2.position.set(0, 0.05, 0); g.add(web2);
     scene.add(g);
   }
   function buildChecks3D(scene, state) {
     const g = new THREE.Group();
     const slab = beamSolid(9, 0.7, 2.4, 0x8a8f9a); slab.position.set(0, 3.1, 0); g.add(slab);
-    const ft = beamSolid(3.4, 0.45, 2.4, 0x3a404c); ft.position.set(0, 2.45, 0); g.add(ft);
-    const fb = beamSolid(3.0, 0.45, 2.4, 0x3a404c); fb.position.set(0, -1.6, 0); g.add(fb);
-    const web = beamSolid(0.35, 3.7, 2.4, 0x2a2e37); web.position.set(0, 0.55, 0); g.add(web);
-    // barre utilizzo come colonne
+    const ft = beamSolid(3.4, 0.45, 2.4, 0x2f6fb0); ft.position.set(0, 2.45, 0); g.add(ft);
+    const fb = beamSolid(3.0, 0.45, 2.4, 0x2f6fb0); fb.position.set(0, -1.6, 0); g.add(fb);
+    const web = beamSolid(0.35, 3.7, 2.4, 0x2a5f96); web.position.set(0, 0.55, 0); g.add(web);
     const bars = [];
     for (let i = 0; i < 6; i++) {
       const b = beamSolid(0.5, 0.1, 0.5, 0x00d4aa);
