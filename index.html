@@ -32,7 +32,7 @@
     <div class="hidden sm:flex gap-6 text-sm muted"><a href="#analysis">Analisi</a><a href="#method">Metodo</a><a href="#cli">CLI</a></div>
     <span class="mono text-[10px] px-3 py-2 rounded-full border border-slate-700 text-slate-400">NTC2018 · EC4</span>
   </nav>
-
+  
   <main id="top" class="max-w-6xl mx-auto px-5 pb-24">
     <section class="pt-12 md:pt-20 text-center max-w-4xl mx-auto">
       <div class="inline-flex items-center gap-2 border border-slate-700 rounded-full px-3 py-1.5 mono text-[10px] text-slate-400 mb-7"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> OPEN STRUCTURAL ANALYSIS WORKSPACE</div>
@@ -78,7 +78,7 @@
     <section id="cli" class="panel mt-5 p-6 md:p-8 grid md:grid-cols-[1fr_auto] gap-8 items-center"><div><div class="eyebrow">Reproducible engineering</div><h2 class="text-2xl font-bold mt-2">Dalla sessione interattiva alla CLI</h2><p class="muted mt-2 text-sm">La visualizzazione segue gli stessi concetti del workflow di CompositeSectionCheck.</p></div><div class="mono text-xs rounded-lg border border-slate-700 bg-black/30 p-4 text-slate-300 leading-7"><span class="text-violet-300">$</span> compositecheck solve --moment 1200<br><span class="text-emerald-300">✓</span> transformed section · n=6.12<br><span class="text-emerald-300">✓</span> stress field exported</div></section>
     <footer class="text-center muted text-xs mono mt-12">CompositeSectionCheck · technical demo · NTC2018 / EN 1994-1-1</footer>
   </main>
-
+  
 <script>
 const $ = id => document.getElementById(id);
 const Es = 210000, Ec = 34300, n = Es / Ec;
@@ -101,7 +101,7 @@ function draw(d){
   const W=620,H=430, top=35,bottom=385, center=235, scale=Math.min(270/(d.h+d.t),1.0); const y0=top+d.t*scale; const steelTop=y0, steelBottom=y0+d.h*scale;
   const mapY=y=> y0+(y+d.t)*scale; const naY=mapY(d.yNA); const maxStress=Math.max(d.sigS,1);
   let s=`<rect width="620" height="430" fill="#0a0c12"/><g stroke="#242938" stroke-width="1">${[70,140,210,280,350].map(x=>line(x,25,x,395,'#242938')).join('')}</g>`;
-  s+=line(48,top,48,bottom,'#596174'); s+=`<text x="18" y="27" fill="#8b91a7" font-size="10">y [mm]</text>`;
+  s+=line(48,top,48,bottom,'#596174')+`<text x="18" y="27" fill="#8b91a7" font-size="10">y [mm]</text>`;
   for(let i=0;i<=4;i++){const yy=top+i*(bottom-top)/4; const value=Math.round((d.t+d.h)*i/4-d.t); s+=line(43,yy,53,yy,'#596174')+`<text x="5" y="${yy+4}" fill="#8b91a7" font-size="9">${value}</text>`;}
   // section, with steel I profile
   s+=`<g transform="translate(${center},0)">${rect(-Math.min(d.be*scale*.25,125),top,Math.min(d.be*scale*.5,250),d.t*scale,'#91a4ff','#aebaff')}${rect(-105,steelTop,210,d.tf*scale,'#d4d8e7','#ffffff')}${rect(-105,steelBottom-d.tf*scale,210,d.tf*scale,'#d4d8e7','#ffffff')}${rect(-d.tw*scale/2,steelTop+d.tf*scale,d.tw*scale,d.h*scale-2*d.tf*scale,'#d4d8e7','#ffffff')}</g>`;
@@ -152,7 +152,7 @@ function draw(d){
     s+=`<text x="${sx+steelW_tension+8}" y="${steelBottom-5}" fill="#22c55e" font-size="10">+${d.sigS.toFixed(1)}</text>`;
     s+=`<text x="${sx-steelW_comp-45}" y="${steelTop+12}" fill="#ffb2bd" font-size="10">-${(d.sigS*(naY-steelTop)/(steelBottom-naY)).toFixed(1)}</text>`;
   }
-  s+=`<text x="${center-32}" y="${top-8}" fill="#91a4ff" font-size="10">SOLEtta</text><text x="${center-30}" y="${steelBottom+18}" fill="#d4d8e7" font-size="10">HEA 400</text>`;
+  s+=`<text x="${center-32}" y="${top-8}" fill="#91a4ff" font-size="10">SOLETTA</text><text x="${center-30}" y="${steelBottom+18}" fill="#d4d8e7" font-size="10">HEA 400</text>`;
   $('plot').innerHTML=s;
 }
 ['t','be','m'].forEach(id=>$(id).addEventListener('input',calculate));
