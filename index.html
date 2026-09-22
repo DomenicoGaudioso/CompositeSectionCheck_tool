@@ -106,11 +106,52 @@ function draw(d){
   // section, with steel I profile
   s+=`<g transform="translate(${center},0)">${rect(-Math.min(d.be*scale*.25,125),top,Math.min(d.be*scale*.5,250),d.t*scale,'#91a4ff','#aebaff')}${rect(-105,steelTop,210,d.tf*scale,'#d4d8e7','#ffffff')}${rect(-105,steelBottom-d.tf*scale,210,d.tf*scale,'#d4d8e7','#ffffff')}${rect(-d.tw*scale/2,steelTop+d.tf*scale,d.tw*scale,d.h*scale-2*d.tf*scale,'#d4d8e7','#ffffff')}</g>`;
   s+=line(center-135,naY,center+135,naY,'#ff7185','6 5')+`<text x="${center+140}" y="${naY+4}" fill="#ff7185" font-size="10">NA ${d.yNA.toFixed(1)} mm</text>`;
-  // stress plot to right, same y coordinates; tension width proportional to stress
-  const sx=390, sw=175; s+=line(sx,top,sx,bottom,'#596174')+`<text x="385" y="27" fill="#8b91a7" font-size="10">σ [MPa]</text>`;
-  const steelW=Math.min(sw,Math.max(2,d.sigS/maxStress*sw)); const concW=Math.min(sw,Math.max(2,d.sigC/maxStress*sw));
-  s+=`<polygon points="${sx},${steelTop} ${sx},${steelBottom} ${sx-steelW},${(steelTop+steelBottom)/2}" fill="#ff7185" opacity=".8"/><polygon points="${sx},${top} ${sx},${y0} ${sx+concW/2},${(top+y0)/2}" fill="#b58cff" opacity=".85"/>`;
-  s+=`<text x="${sx+10}" y="${(top+y0)/2}" fill="#d7c8ff" font-size="10">σc,max ${d.sigC.toFixed(1)}</text><text x="${sx-steelW-70}" y="${(steelTop+steelBottom)/2}" fill="#ffb2bd" font-size="10">σs,max ${d.sigS.toFixed(1)}</text>`;
+  // stress plot to right, same y coordinates; proper beam bending stress distribution
+  const sx=390, sw=175; s+=line(sx,top,sx,bottom,'#596174')+`<text x="${sx-20}" y="27" fill="#8b91a7" font-size="10">σ [MPa]</text>`;
+  
+  if(phase==='pre'){
+    // PRE-COMPOSITE: steel only, linear distribution from compression (top) to tension (bottom)
+    // NA at steel centroid
+    const naSteel = mapY(d.h/2); // centroid of symmetric I-beam
+    const maxTension = d.sigS; // at bottom fiber
+    const maxCompression = d.sigS * (naSteel-top)/(bottom-naSteel); // at top fiber
+    
+    // Draw stress profile: linear through NA
+    const widthAtBottom = Math.min(sw, maxTension/300*sw);
+    const widthAtTop = Math.min(sw, maxCompression/300*sw);
+    
+    // Tension zone (green, right side, below NA)
+    s+=`<polygon points="${sx},${naSteel} ${sx},${steelBottom} ${sx+widthAtBottom},${steelBottom} ${sx},${naSteel}" fill="#22c55e" opacity=".7"/>`;
+    // Compression zone (red, left side, above NA)
+    s+=`<polygon points="${sx},${top} ${sx},${naSteel} ${sx-widthAtTop},${top} ${sx},${naSteel}" fill="#ef4444" opacity=".7"/>`;
+    
+    // Labels
+    s+=`<text x="${sx+widthAtBottom+8}" y="${steelBottom-5}" fill="#22c55e" font-size="10">+${maxTension.toFixed(1)}</text>`;
+    s+=`<text x="${sx-widthAtTop-55}" y="${top+12}" fill="#ef4444" font-size="10">-${maxCompression.toFixed(1)}</text>`;
+    s+=`<text x="${sx-18}" y="${naSteel+4}" fill="#8b91a7" font-size="9">NA</text>`;
+  } else {
+    // POST-COMPOSITE: full transformed section
+    // Concrete slab: all in compression (left side)
+    // Steel: compression above NA, tension below NA
+    
+    const steelW_tension = Math.min(sw, d.sigS/300*sw);
+    const concW = Math.min(sw*0.6, d.sigC/150*sw);
+    
+    // Concrete compression (purple, left side, from top to steel top)
+    s+=`<polygon points="${sx},${top} ${sx},${y0} ${sx-concW},${y0} ${sx-concW*0.7},${(top+y0)/2} ${sx},${top}" fill="#a855f7" opacity=".75"/>`;
+    
+    // Steel tension (green, right side, from NA to bottom)
+    s+=`<polygon points="${sx},${naY} ${sx},${steelBottom} ${sx+steelW_tension},${steelBottom} ${sx},${naY}" fill="#22c55e" opacity=".75"/>`;
+    
+    // Steel compression (red, left side, from steel top to NA)
+    const steelW_comp = steelW_tension * (naY-steelTop)/(steelBottom-naY);
+    s+=`<polygon points="${sx},${steelTop} ${sx},${naY} ${sx-steelW_comp},${steelTop} ${sx},${steelTop}" fill="#ef4444" opacity=".7"/>`;
+    
+    // Labels
+    s+=`<text x="${sx-concW-45}" y="${(top+y0)/2}" fill="#d7c8ff" font-size="10">σ_c=${d.sigC.toFixed(1)}</text>`;
+    s+=`<text x="${sx+steelW_tension+8}" y="${steelBottom-5}" fill="#22c55e" font-size="10">+${d.sigS.toFixed(1)}</text>`;
+    s+=`<text x="${sx-steelW_comp-45}" y="${steelTop+12}" fill="#ffb2bd" font-size="10">-${(d.sigS*(naY-steelTop)/(steelBottom-naY)).toFixed(1)}</text>`;
+  }
   s+=`<text x="${center-32}" y="${top-8}" fill="#91a4ff" font-size="10">SOLEtta</text><text x="${center-30}" y="${steelBottom+18}" fill="#d4d8e7" font-size="10">HEA 400</text>`;
   $('plot').innerHTML=s;
 }
