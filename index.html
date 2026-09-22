@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CompositeSectionCheck — Sezioni composte acciaio-calcestruzzo</title>
-<meta name="description" content="Analisi elastica di sezioni composte acciaio-calcestruzzo con metodo della sezione trasformata. NTC2018 · EN 1994-1-1">
+<meta name="description" content="Verifica di sezioni composte acciaio-calcestruzzo per impalcati da ponte: fasi costruttive, sezione trasformata, classi 1-4, fatica, pioli e report Word. NTC2018 · EN 1994-1-1 · EN 1993-1-5.">
 <style>
+
   :root {
     --bg: #ffffff;
     --surface: #f7f8fa;
@@ -66,11 +67,11 @@
     50% { opacity: 0.4; transform: scale(0.8); }
   }
   .hero h1 {
-    font-size: clamp(48px, 9vw, 96px);
+    font-size: clamp(56px, 11vw, 128px);
     font-weight: 800; letter-spacing: -0.04em; margin: 24px 0 16px;
     background: linear-gradient(180deg, #0a0a0f 0%, #6e6e7a 100%);
     -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; line-height: 1.1;
+    -webkit-text-fill-color: transparent; line-height: 1;
   }
   .hero .subtitle { font-size: clamp(16px, 2vw, 20px); color: var(--text-secondary); max-width: 640px; margin: 0 auto 56px; }
 
@@ -108,7 +109,7 @@
     flex: 1; text-align: center; font-family: var(--font-mono);
     font-size: 12px; color: var(--term-text-sec); letter-spacing: 0.02em;
   }
-  .terminal-body { position: relative; padding: 22px 24px; height: 400px; overflow: hidden; background: var(--term-bg); }
+  .terminal-body { position: relative; padding: 22px 24px; height: 440px; overflow: hidden; background: var(--term-bg); }
   .perspective-grid {
     position: absolute; inset: -50%;
     background-image:
@@ -155,6 +156,13 @@
     font-family: var(--font-mono); box-shadow: 0 4px 10px rgba(0,0,0,0.03);
   }
 
+  /* barra di navigazione documentazione */
+  .docbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+    background:var(--term-surface);border-bottom:1px solid var(--term-border);
+    padding:10px 22px;font-family:var(--font-mono);font-size:12px;color:var(--term-text-sec);position:relative;z-index:2}
+  .docbar a{color:var(--accent);text-decoration:none}
+  .docbar a:hover{text-decoration:underline}
+
   /* SECTIONS */
   .section { padding: 100px 0; position: relative; z-index: 2; background: var(--bg); }
   .section-header { text-align: center; margin-bottom: 56px; }
@@ -192,136 +200,221 @@
   .demo-terminal-header .dots span { width: 8px; height: 8px; border-radius: 50%; }
   .demo-terminal-body { padding: 16px; font-size: 13px; color: var(--term-text); min-height: 132px; }
   .dt-prompt { color: var(--accent); }
-  .dt-cmd { color: var(--term-text); }
-  .dt-out { color: var(--term-text-sec); margin-top: 4px; }
+  .dt-cmd { color: #fff; }
+  .dt-out { color: var(--term-text-sec); margin: 4px 0 0 14px; white-space: pre-wrap; transition: opacity .4s ease; }
   .dt-out.good { color: var(--accent); }
   .dt-cursor {
     display: inline-block; width: 7px; height: 13px; background: var(--accent);
-    vertical-align: text-bottom; margin-left: 2px;
-    animation: blink 1s steps(1) infinite;
+    vertical-align: text-bottom; animation: blink 1s steps(1) infinite;
   }
 
+  /* STAGE */
   .demo-stage-wrap {
-    position: relative; width: 100%; height: 520px;
-    background: var(--term-bg); border-radius: 14px; overflow: hidden;
-    border: 1px solid var(--term-border);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    position: relative; width: 100%;
+    height: min(74vh, 680px); min-height: 420px;
+    background: #0d1117; overflow: hidden;
   }
-  .demo-stage-wrap canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-  .gl-layer { pointer-events: none; }
+  .demo-stage-wrap canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+    transition: opacity 0.25s linear;
+  }
+  .demo-stage-wrap canvas.gl-layer { opacity: 0; }
   .stage-vignette {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
-    pointer-events: none; z-index: 10;
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,0.52) 100%);
   }
-  .corner {
-    position: absolute; width: 24px; height: 24px; border: 2px solid rgba(0,212,170,0.5); z-index: 11;
-  }
-  .c-tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
-  .c-tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
-  .c-bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
-  .c-br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+  .demo-stage-wrap .scanlines { opacity: 0.22; z-index: 3; }
   .hud {
-    position: absolute; font-family: var(--font-mono); font-size: 11px;
-    color: rgba(255,255,255,0.7); z-index: 12; letter-spacing: 0.08em;
+    position: absolute; z-index: 5;
+    font-family: var(--font-mono); font-size: 11.5px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(235,240,245,0.88);
+    background: rgba(8,10,16,0.55);
+    border: 1px solid rgba(0, 212, 170, 0.28);
+    backdrop-filter: blur(6px);
+    padding: 7px 12px; border-radius: 8px;
+    display: flex; align-items: center; gap: 9px;
+    max-width: calc(100vw - 48px);
   }
-  .hud-tl { top: 16px; left: 56px; }
-  .hud-tc { top: 16px; left: 50%; transform: translateX(-50%); }
-  .hud-tr { top: 16px; right: 16px; }
-  .hud-bl { bottom: 16px; left: 56px; }
-  .hud-br { bottom: 16px; right: 16px; }
+  .hud b { color: var(--accent); font-weight: 500; }
+  .hud-tl { top: 22px; left: 26px; }
+  .hud-tr { top: 22px; right: 26px; }
+  .hud-tc { top: 22px; left: 50%; transform: translateX(-50%); border-color: rgba(251,191,36,.4); color: #fbbf24; }
+  .hud-bl { bottom: 22px; left: 26px; }
+  .hud-br { bottom: 22px; right: 26px; color: rgba(235,240,245,0.6); }
   .rec {
-    display: inline-block; width: 8px; height: 8px; background: #ff5f57;
-    border-radius: 50%; margin-right: 6px; animation: rec-pulse 1.5s ease-in-out infinite;
+    width: 9px; height: 9px; border-radius: 50%; background: #ef4444;
+    box-shadow: 0 0 10px #ef4444; animation: pulse 1.3s ease-in-out infinite; flex-shrink: 0;
   }
-  @keyframes rec-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .corner { position: absolute; width: 24px; height: 24px; border: 2px solid rgba(0, 212, 170, 0.55); z-index: 5; pointer-events: none; }
+  .c-tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+  .c-tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+  .c-bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+  .c-br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
 
-  /* FEATURES */
-  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  /* FEATURES — QUADRATI */
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .feature-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 28px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   }
-  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .feature-card:hover { transform: translateY(-4px); border-color: var(--border-accent); background: #fff; }
+  .feature-card:hover::before { opacity: 1; }
   .feature-icon {
-    width: 48px; height: 48px; background: var(--accent-soft);
-    border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    font-size: 24px; margin-bottom: 16px;
+    width: 62px; height: 62px; border-radius: 16px;
+    background: var(--accent-soft); border: 1px solid var(--border-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 18px;
+    transition: transform 0.3s ease;
   }
-  .feature-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
-  .feature-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+  .feature-card:hover .feature-icon { transform: rotate(-6deg) scale(1.08); }
+  .feature-title { font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+  .feature-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
+  @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .feature-card { aspect-ratio: auto; }
+  }
 
-  /* CODE BLOCK */
-  .code-wrap {
-    background: var(--term-bg); border: 1px solid var(--term-border);
-    border-radius: var(--radius); overflow: hidden; margin-top: 40px;
+  /* INSTALL */
+  .code-block {
+    position: relative; background: var(--term-bg); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden; max-width: 820px; margin: 0 auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
   }
   .code-header {
-    background: var(--term-surface); padding: 10px 16px;
-    border-bottom: 1px solid var(--term-border);
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 10px 14px; background: var(--term-surface);
+    border-bottom: 1px solid var(--term-border); gap: 10px;
   }
-  .code-dots { display: flex; gap: 6px; }
-  .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .copy-btn {
+    background: transparent; border: 1px solid var(--term-border);
+    color: var(--term-text-sec); padding: 5px 12px; border-radius: 6px;
+    cursor: pointer; font-size: 12px; font-family: var(--font-mono);
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover { border-color: var(--border-accent); color: var(--accent); }
+  .code-label { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); padding: 5px 0; }
   .code-content {
-    padding: 20px; font-family: var(--font-mono); font-size: 13px;
-    line-height: 1.7; color: var(--term-text); overflow-x: auto;
+    padding: 20px 22px; font-family: var(--font-mono); font-size: 13px;
+    line-height: 1.85; overflow-x: auto; color: var(--term-text);
   }
-  .code-comment { color: var(--term-text-sec); }
+  .code-comment { color: #6e6e7a; }
   .code-command { color: var(--accent); }
-
-  /* INFO BOX */
-  .info-box {
-    background: var(--accent-soft); border-left: 3px solid var(--accent);
-    padding: 16px 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    margin-top: 20px; font-size: 13px; color: var(--text-secondary);
-  }
-  .info-box a { color: var(--accent); text-decoration: underline; }
+  .install-note { text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-secondary); }
+  .install-note a { color: var(--accent); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
 
   /* CTA */
-  .cta-section {
-    text-align: center; padding: 100px 0;
-    background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+  .cta-section { padding: 100px 0; }
+  .cta-box {
+    position: relative; max-width: 720px; margin: 0 auto; padding: 56px 40px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border-accent); border-radius: 16px;
+    text-align: center; overflow: hidden;
   }
-  .cta-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; margin-bottom: 16px; color: var(--text); }
-  .cta-subtitle { font-size: 18px; color: var(--text-secondary); max-width: 580px; margin: 0 auto 32px; }
+  .cta-glow {
+    position: absolute; width: 600px; height: 600px; top: 50%; left: 50%;
+    margin-top: -300px; margin-left: -300px;
+    background: radial-gradient(circle at 30% 30%, rgba(0, 212, 170, 0.25) 0%, transparent 55%);
+    animation: glow-rotate 20s linear infinite; pointer-events: none; z-index: 0; filter: blur(20px);
+  }
+  @keyframes glow-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .cta-content { position: relative; z-index: 1; }
+  .cta-title { font-size: clamp(28px, 4vw, 36px); font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text); }
+  .cta-subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; }
   .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
   .btn {
+    padding: 12px 24px; border-radius: 10px; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s ease;
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 14px 28px; border-radius: 10px;
-    font-size: 15px; font-weight: 600; text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; font-family: var(--font-sans);
   }
-  .btn-primary {
-    background: var(--accent); color: #fff;
-    box-shadow: 0 8px 24px rgba(0,212,170,0.3);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,212,170,0.4); }
-  .btn-secondary {
-    background: var(--surface); color: var(--text);
-    border: 1px solid var(--border);
-  }
-  .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .btn-primary { background: var(--accent); color: #ffffff; border: 1px solid var(--accent); }
+  .btn-primary:hover { box-shadow: 0 0 30px rgba(0, 212, 170, 0.4); transform: translateY(-2px); }
+  .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 40px 0; text-align: center;
-    font-size: 13px; color: var(--text-muted);
-    font-family: var(--font-mono);
+  .footer {
+    border-top: 1px solid var(--border); padding: 32px 24px;
+    text-align: center; color: var(--text-muted); font-size: 14px;
+    background: var(--bg); position: relative; z-index: 2;
   }
-  footer a { color: var(--accent); }
+  .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .footer a:hover { text-decoration: underline; }
 
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .demo-head { grid-template-columns: 1fr; gap: 32px; }
-    .features-grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: clamp(36px, 10vw, 56px); }
+  @media (max-width: 768px) {
+    .demo-head { grid-template-columns: 1fr; gap: 32px; align-items: start; }
+    .demo-stage-wrap { height: 56vh; min-height: 380px; }
+    .hud { font-size: 10px; padding: 6px 9px; }
+    .hud-br, .hud-tc { display: none; }
+    .terminal-body { height: 380px; padding: 16px; }
+    .terminal-content { font-size: 11px; }
+    .cta-box { padding: 40px 24px; }
+    .cta-buttons { flex-direction: column; }
+    .btn { width: 100%; justify-content: center; }
+    .section { padding: 64px 0; }
+    .scroll-demo-section { padding-top: 64px; }
+    .hero { padding: 48px 0 40px; }
+    .terminal-badges { gap: 8px; }
+    .term-badge { font-size: 11px; padding: 5px 10px; }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+</style>
+<style>
+  .branch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 900px) { .branch-grid { grid-template-columns: 1fr; } }
+  .branch-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px; position: relative; overflow: hidden; transition: transform .25s ease, border-color .25s ease;
+  }
+  .branch-card:hover { transform: translateY(-4px); border-color: var(--border-accent); }
+  .branch-card .bf { font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; color: var(--accent); margin-bottom: 8px; display: block; }
+  .branch-card h3 { font-size: 17px; font-weight: 650; margin-bottom: 6px; }
+  .branch-card .branches { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px; }
+  .branch-card p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
+  .branch-svg { width: 100%; height: 92px; margin-bottom: 12px; background: var(--term-bg); border-radius: var(--radius-sm); }
+  .hero h1 { font-size: clamp(38px, 7.2vw, 84px) !important; }
+  .phase-tags { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top: 14px; }
+  .phase-tag { font-family: var(--font-mono); font-size: 11px; padding: 5px 11px; border-radius: 100px; background: var(--surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+  .phase-tag.on { background: var(--accent-soft); color: var(--accent); border-color: var(--border-accent); }
 </style>
 </head>
 <body>
+
+<div class="docbar">
+  <a href="../">← ing. Domenico Gaudioso</a>
+  <span>CompositeSectionCheck · sezioni composte</span>
+  <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck">Repository sorgente →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="heroSection">
@@ -329,10 +422,10 @@
   <div class="container hero-content">
     <div class="badge">
       <span class="badge-dot"></span>
-      v1.0.0 — Sezione Trasformata CLI
+      NTC2018 · EN 1994-1-1 · EN 1993-1-5
     </div>
     <h1>CompositeSectionCheck</h1>
-    <p class="subtitle">Analisi elastica di travi composte acciaio-calcestruzzo. Calcola asse neutro, inerzia omogeneizzata e diagrammi di tensione con il metodo della sezione trasformata.</p>
+    <p class="subtitle">La verifica delle sezioni composte acciaio-calcestruzzo per impalcati da ponte. Fasi costruttive, sezione trasformata, classi 1-4, fatica e relazione Word — su tre famiglie di sezione, dal doppio T al cassone.</p>
 
     <div class="terminal-wrap" id="terminalWrap">
       <div class="terminal-glow"></div>
@@ -343,7 +436,7 @@
             <span class="dot dot-yellow"></span>
             <span class="dot dot-green"></span>
           </div>
-          <div class="terminal-title">compositecheck — transformed section solver</div>
+          <div class="terminal-title">CompositeSectionCheck — verifica sezioni composte</div>
         </div>
         <div class="terminal-body">
           <div class="perspective-grid"></div>
@@ -354,22 +447,24 @@
     </div>
 
     <div class="terminal-badges">
-      <span class="term-badge">Sezione Trasformata</span>
-      <span class="term-badge">NTC2018</span>
-      <span class="term-badge">EN 1994-1-1</span>
+      <span class="term-badge">Acciaio-Calcestruzzo</span>
+      <span class="term-badge">Fasi Costruttive</span>
+      <span class="term-badge">Fatica</span>
+      <span class="term-badge">Report Word</span>
     </div>
+    <div class="phase-tags" id="heroPhases"></div>
   </div>
 </section>
 
-<!-- DEMO 1: PRE-COMPOSITO -->
+<!-- DEMO 1 -->
 <section class="scroll-demo-section" id="demo1">
   <div class="container demo-head-zone">
     <div class="demo-head">
       <div class="demo-text">
-        <span class="demo-label reveal-up d1">CASE STUDY 01 · FASE PRE-COMPOSITO</span>
-        <h2 class="demo-title reveal-up d2">Trave d'Acciaio Sotto Carico Proprio</h2>
+        <span class="demo-label reveal-up d1">CASE STUDY 01 · FASI COSTRUTTIVE</span>
+        <h2 class="demo-title reveal-up d2">Dalla Trave Nuda alla Sezione Trasformata</h2>
         <p class="demo-desc reveal-up d3">
-          Nella fase costruttiva iniziale, solo il profilo d'acciaio resiste ai carichi. Il diagramma delle tensioni mostra compressione sopra l'asse neutro e trazione sotto — distribuzione lineare secondo Navier.
+          Ogni fase di vita dell'impalcato ha la sua sezione: acciaio solo in fase di posa, sezione omogeneizzata dopo il getto, coefficienti n₀ e n∞ per fluage e ritiro, fino al comportamento fessurato. Le tensioni per fibra evolvono fase per fase.
         </p>
       </div>
       <div class="demo-terminal reveal-up d3">
@@ -379,13 +474,13 @@
             <span style="background:#febc2e"></span>
             <span style="background:#28c840"></span>
           </div>
-          <span>compositecheck — phase pre</span>
+          <span>csc — sezione trasformata</span>
         </div>
         <div class="demo-terminal-body">
           <div><span class="dt-prompt">➜</span> <span class="dt-cmd" id="t1cmd"></span><span class="dt-cursor"></span></div>
-          <div class="dt-out" id="t1out1" style="opacity:0">✓ Sezione: HEA 400 (S355)</div>
-          <div class="dt-out" id="t1out2" style="opacity:0">✓ y_NA = 195.0 mm (baricentro)</div>
-          <div class="dt-out good" id="t1out3" style="opacity:0">✓ σ_max = 187.4 MPa @ fibra inferiore</div>
+          <div class="dt-out" id="t1out1" style="opacity:0">✓ Fase G1: sola sezione metallica</div>
+          <div class="dt-out" id="t1out2" style="opacity:0">✓ Post-getto: n₀ = 6.42 · n∞ = 12.8</div>
+          <div class="dt-out good" id="t1out3" style="opacity:0">✓ Ritiro + fluage applicati · tensioni per fibra</div>
         </div>
       </div>
     </div>
@@ -396,23 +491,23 @@
     <div class="scanlines"></div>
     <div class="stage-vignette"></div>
     <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
-    <div class="hud hud-tl"><span class="rec"></span> PRE-COMPOSITO · SOLO ACCIAIO</div>
-    <div class="hud hud-tc" id="vw1">DIAGRAMMA σ(y)</div>
-    <div class="hud hud-tr" id="tc1">M = 1200 kNm</div>
-    <div class="hud hud-bl" id="ro1">σ_max = 187.4 MPa</div>
-    <div class="hud hud-br">CompositeSectionCheck · elastic analysis</div>
+    <div class="hud hud-tl"><span class="rec"></span> CASE 01 · FASI · SEZIONE TRASFORMATA</div>
+    <div class="hud hud-tc" id="vw1">VISTA 2D · SEZIONE</div>
+    <div class="hud hud-tr" id="tc1">00:00</div>
+    <div class="hud hud-bl" id="ro1">fase — · n — · σ — MPa</div>
+    <div class="hud hud-br">CompositeSectionCheck · live simulation</div>
   </div>
 </section>
 
-<!-- DEMO 2: POST-COMPOSITO -->
+<!-- DEMO 2 -->
 <section class="scroll-demo-section alt-bg" id="demo2">
   <div class="container demo-head-zone">
     <div class="demo-head">
       <div class="demo-text">
-        <span class="demo-label reveal-up d1">CASE STUDY 02 · FASE POST-COMPOSITO</span>
-        <h2 class="demo-title reveal-up d2">Sezione Omogeneizzata Acciaio-Calcestruzzo</h2>
+        <span class="demo-label reveal-up d1">CASE STUDY 02 · TRE FAMIGLIE DI SEZIONE</span>
+        <h2 class="demo-title reveal-up d2">Doppio T, T Irrigidito, Cassone</h2>
         <p class="demo-desc reveal-up d3">
-          Con la soletta collaborante, il calcestruzzo viene trasformato in acciaio equivalente (n = E_s/E_c). L'asse neutro sale, l'inerzia aumenta e le tensioni si ridistribuiscono: la soletta lavora compressa, l'acciaio ha zona compressa e tesa.
+          Un branch per famiglia di sezione, in versione singola e multi-sezione. Dal doppio T composto di riferimento, al T con irrigidimenti longitudinali d'anima (piatto, T, canaletta), fino al cassone multi-anima con irrigidimenti di piattabanda e flusso torsionale.
         </p>
       </div>
       <div class="demo-terminal reveal-up d3">
@@ -422,13 +517,13 @@
             <span style="background:#febc2e"></span>
             <span style="background:#28c840"></span>
           </div>
-          <span>compositecheck — phase post</span>
+          <span>csc — famiglie di sezione</span>
         </div>
         <div class="demo-terminal-body">
           <div><span class="dt-prompt">➜</span> <span class="dt-cmd" id="t2cmd"></span><span class="dt-cursor"></span></div>
-          <div class="dt-out" id="t2out1" style="opacity:0">✓ n = 6.12 · b_eff = 3000 mm</div>
-          <div class="dt-out" id="t2out2" style="opacity:0">✓ y_NA = 285.3 mm dall'estradosso</div>
-          <div class="dt-out good" id="t2out3" style="opacity:0">✓ I_tr = 2.84×10⁹ mm⁴</div>
+          <div class="dt-out" id="t2out1" style="opacity:0">✓ More-T-section: doppio T + soletta</div>
+          <div class="dt-out" id="t2out2" style="opacity:0">✓ More-T-irrigidita: nervature d'anima EN 1993-1-5 §4.5</div>
+          <div class="dt-out good" id="t2out3" style="opacity:0">✓ More-Cassone: 3 anime · q = Mt / (2·Am)</div>
         </div>
       </div>
     </div>
@@ -439,11 +534,106 @@
     <div class="scanlines"></div>
     <div class="stage-vignette"></div>
     <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
-    <div class="hud hud-tl"><span class="rec"></span> POST-COMPOSITO · SEZIONE TRASFORMATA</div>
-    <div class="hud hud-tc" id="vw2">DIAGRAMMA σ(y)</div>
-    <div class="hud hud-tr" id="tc2">M = 1200 kNm</div>
-    <div class="hud hud-bl" id="ro2">σ_s,max = 156.2 MPa · σ_c,max = 12.8 MPa</div>
-    <div class="hud hud-br">CompositeSectionCheck · elastic analysis</div>
+    <div class="hud hud-tl"><span class="rec"></span> CASE 02 · FAMIGLIE · <span id="famName">DOPPIO T</span></div>
+    <div class="hud hud-tc" id="vw2">VISTA 2D · SEZIONE</div>
+    <div class="hud hud-tr" id="tc2">00:00</div>
+    <div class="hud hud-bl" id="ro2">branch — · classe —</div>
+    <div class="hud hud-br">CompositeSectionCheck · live simulation</div>
+  </div>
+</section>
+
+<!-- DEMO 3 -->
+<section class="scroll-demo-section" id="demo3">
+  <div class="container demo-head-zone">
+    <div class="demo-head">
+      <div class="demo-text">
+        <span class="demo-label reveal-up d1">CASE STUDY 03 · VERIFICHE & REPORT</span>
+        <h2 class="demo-title reveal-up d2">SLU, SLE, Fatica — e la Relazione Word</h2>
+        <p class="demo-desc reveal-up d3">
+          Tensioni per fibra in ogni voce di carico (G1, G2, ritiro, sisma, mobili) e in combinazione. Verifiche a flessione elastica e plastica, taglio con instabilità dell'anima, interazione M-V, pioli Nelson, cordoni di gola, web breathing a fatica. Tutto chiuso in una relazione .docx.
+        </p>
+      </div>
+      <div class="demo-terminal reveal-up d3">
+        <div class="demo-terminal-header">
+          <div class="dots">
+            <span style="background:#ff5f57"></span>
+            <span style="background:#febc2e"></span>
+            <span style="background:#28c840"></span>
+          </div>
+          <span>csc — verifiche</span>
+        </div>
+        <div class="demo-terminal-body">
+          <div><span class="dt-prompt">➜</span> <span class="dt-cmd" id="t3cmd"></span><span class="dt-cursor"></span></div>
+          <div class="dt-out" id="t3out1" style="opacity:0">✓ SLU flessione + taglio + M-V</div>
+          <div class="dt-out" id="t3out2" style="opacity:0">✓ SLE tensioni · pioli · fatica ζ &lt; 1</div>
+          <div class="dt-out good" id="t3out3" style="opacity:0">✓ Relazione_Composita.docx generata</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="demo-stage-wrap">
+    <canvas id="stage3"></canvas>
+    <canvas id="gl3" class="gl-layer"></canvas>
+    <div class="scanlines"></div>
+    <div class="stage-vignette"></div>
+    <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
+    <div class="hud hud-tl"><span class="rec"></span> CASE 03 · CHECK · SLU / SLE / FATICA</div>
+    <div class="hud hud-tc" id="vw3">VISTA 2D · ANALISI</div>
+    <div class="hud hud-tr" id="tc3">00:00</div>
+    <div class="hud hud-bl" id="ro3">utilizzi — · ζ — </div>
+    <div class="hud hud-br">CompositeSectionCheck · live simulation</div>
+  </div>
+</section>
+
+<!-- BRANCH / FAMIGLIE -->
+<section class="section" id="famiglie">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Un branch per famiglia di sezione</h2>
+      <p class="section-subtitle">CompositeSectionCheck è organizzato in branch: ogni famiglia geometrica ha la propria app, in versione a sezione singola e multi-sezione (input Excel con più sezioni).</p>
+    </div>
+    <div class="branch-grid">
+      <div class="branch-card">
+        <svg class="branch-svg" viewBox="0 0 220 92">
+          <rect x="30" y="14" width="160" height="14" fill="#3a3f4a" stroke="#00d4aa" stroke-width="1.4"/>
+          <rect x="98" y="28" width="24" height="42" fill="#2a2e37" stroke="#00d4aa" stroke-width="1.4"/>
+          <rect x="58" y="70" width="104" height="12" fill="#3a3f4a" stroke="#00d4aa" stroke-width="1.4"/>
+          <rect x="30" y="8" width="160" height="7" fill="#6b6f7a" opacity="0.85"/>
+        </svg>
+        <span class="bf">FAMIGLIA 01</span>
+        <h3>Doppio T composto</h3>
+        <div class="branches">Sezione-a-doppio-T · More-T-section ⭐</div>
+        <p>Trave a doppio T saldato o laminato con soletta in calcestruzzo e pioli Nelson. È il ramo di riferimento: fasi costruttive, classe 1-4, sezione efficace, fatica. La versione More legge più sezioni da un unico Excel.</p>
+      </div>
+      <div class="branch-card">
+        <svg class="branch-svg" viewBox="0 0 220 92">
+          <rect x="30" y="14" width="160" height="13" fill="#3a3f4a" stroke="#00d4aa" stroke-width="1.4"/>
+          <rect x="98" y="27" width="24" height="44" fill="#2a2e37" stroke="#00d4aa" stroke-width="1.4"/>
+          <rect x="58" y="71" width="104" height="11" fill="#3a3f4a" stroke="#00d4aa" stroke-width="1.4"/>
+          <rect x="86" y="36" width="12" height="3.4" fill="#00d4aa"/><rect x="122" y="36" width="12" height="3.4" fill="#00d4aa"/>
+          <rect x="86" y="52" width="12" height="3.4" fill="#00d4aa"/><rect x="122" y="52" width="12" height="3.4" fill="#00d4aa"/>
+          <rect x="30" y="8" width="160" height="7" fill="#6b6f7a" opacity="0.85"/>
+        </svg>
+        <span class="bf">FAMIGLIA 02</span>
+        <h3>Doppio T irrigidito</h3>
+        <div class="branches">Sezione-T-irrigidita · More-T-irrigidita</div>
+        <p>Irrigidimenti longitudinali d'anima in piatto, T o canaletta, su uno o entrambi i lati. Classificazione per sottopannelli, sezione efficace della lamiera irrigidita (EN 1993-1-5 §4.5) e k_τ con nervature.</p>
+      </div>
+      <div class="branch-card">
+        <svg class="branch-svg" viewBox="0 0 220 92">
+          <rect x="24" y="12" width="172" height="12" fill="#3a3f4a" stroke="#00d4aa" stroke-width="1.4"/>
+          <polygon points="44,24 62,74 80,74 70,24" fill="#2a2e37" stroke="#00d4aa" stroke-width="1.3"/>
+          <polygon points="150,24 140,74 158,74 176,24" fill="#2a2e37" stroke="#00d4aa" stroke-width="1.3"/>
+          <rect x="102" y="24" width="16" height="50" fill="#2a2e37" stroke="#00d4aa" stroke-width="1.3"/>
+          <rect x="52" y="74" width="116" height="10" fill="#3a3f4a" stroke="#00d4aa" stroke-width="1.4"/>
+          <rect x="24" y="6" width="172" height="7" fill="#6b6f7a" opacity="0.85"/>
+        </svg>
+        <span class="bf">FAMIGLIA 03</span>
+        <h3>Cassone acciaio-composto</h3>
+        <div class="branches">Cassone · More-Cassone</div>
+        <p>Cassoni con irrigidimenti di piattabanda e anima (Web_ribs / Plate_ribs), anime esterne inclinate e anime interne multiple. Flusso torsionale q = Mt/(2·Am), cordoni di saldatura e taglio su tutte le anime.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -452,319 +642,879 @@
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Perché CompositeSectionCheck?</h2>
-      <p class="section-subtitle">Uno strumento tecnico per ingegneri strutturali che lavorano con travi composte secondo NTC2018 ed Eurocodice 4.</p>
+      <p class="section-subtitle">Il calcolo composto, dalla geometria alla relazione, con i moduli SGMPy e le convenzioni NTC2018 allineate su tutti i branch.</p>
     </div>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">📐</div>
         <h3 class="feature-title">Sezione Trasformata</h3>
-        <p class="feature-desc">Omogeneizzazione automatica calcestruzzo-acciaio con coefficiente n = E_s/E_c,eff. Calcolo preciso di baricentro e inerzia.</p>
+        <p class="feature-desc">Rapporto modulare n, sezione reagente omogeneizzata, baricentro e inerzia per ogni fase: breve durata n₀, lunga durata n∞ con fluage e ritiro.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3 class="feature-title">Diagrammi di Tensione</h3>
-        <p class="feature-desc">Visualizzazione grafica della distribuzione lineare σ(y) = M·(y-y_NA)/I_tr per acciaio e calcestruzzo separatamente.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔄</div>
+        <div class="feature-icon">🏗️</div>
         <h3 class="feature-title">Fasi Costruttive</h3>
-        <p class="feature-desc">Confronto immediato tra fase pre-composito (solo acciaio) e post-composito (sezione omogeneizzata con soletta).</p>
+        <p class="feature-desc">Solo acciaio, G2, ritiro, cedimenti differenziali, carichi mobili, fessurato: le tensioni per fibra sono calcolate voce per voce e in combinazione.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧮</div>
+        <h3 class="feature-title">Classi 1-4 & Efficace</h3>
+        <p class="feature-desc">Classificazione automatica secondo gli Eurocodici e sezione efficace per le lamiere sottili (EN 1993-1-5), anche per anima irrigidita per sottopannelli.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">⚡</div>
-        <h3 class="feature-title">CLI Automation</h3>
-        <p class="feature-desc">Esegui analisi batch, genera report e integra nel tuo workflow di progettazione strutturale automatizzata.</p>
+        <h3 class="feature-title">SLU, SLE & Fatica</h3>
+        <p class="feature-desc">Flessione elastica e plastica, taglio con instabilità dell'anima, interazione M-V, pioli Nelson, saldature Jourawski, respiro dell'anima a fatica.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📚</div>
-        <h3 class="feature-title">Riferimenti Normativi</h3>
-        <p class="feature-desc">Allineamento a NTC2018 e EN 1994-1-1 (Eurocodice 4) per la verifica di travi composte acciaio-calcestruzzo.</p>
+        <div class="feature-icon">📊</div>
+        <h3 class="feature-title">Multi-Sezione & Excel</h3>
+        <p class="feature-desc">Un'unica tabella Sollecitazioni + Sezione con ID sezione: i rami More elaborano lotti di sezioni in un colpo solo, template Dati_Input_*_multi.xlsx.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔓</div>
-        <h3 class="feature-title">Open Source</h3>
-        <p class="feature-desc">Codice trasparente su GitHub. Studia gli algoritmi, modifica e contribuisci al miglioramento dello strumento.</p>
+        <div class="feature-icon">📄</div>
+        <h3 class="feature-title">Report Word</h3>
+        <p class="feature-desc">Relazione di calcolo impaginata in .docx con tabelle di sintesi, utilizzi per lamiera, verifiche per sezione — pronta per il fascicolo di progetto.</p>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="code-wrap">
+<!-- INSTALL -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Installazione</h2>
+      <p class="section-subtitle">Scegli il branch della famiglia di sezione, installa le dipendenze e avvia l'app Streamlit.</p>
+    </div>
+    <div class="code-block">
       <div class="code-header">
-        <div class="code-dots">
-          <span style="background:#ff5f57"></span>
-          <span style="background:#febc2e"></span>
-          <span style="background:#28c840"></span>
-        </div>
-        <span>compositecheck — CLI examples</span>
+        <button class="copy-btn" id="copyBtn">Copia</button>
+        <span class="code-label">bash</span>
       </div>
-      <pre class="code-content" id="codeContent"><span class="code-comment"># Installa CompositeSectionCheck</span>
-<span class="code-command">pip install composite-section-check</span>
+      <pre class="code-content" id="codeContent"><span class="code-comment"># Clona il branch della famiglia che ti serve</span>
+<span class="code-command">git clone -b More-T-section https://github.com/DomenicoGaudioso/CompositeSectionCheck.git</span>
+<span class="code-command">cd CompositeSectionCheck</span>
 
-<span class="code-comment"># Analizza una sezione composita</span>
-<span class="code-command">compositecheck solve --profile HEA400 --slab 250 --width 3000 --moment 1200</span>
+<span class="code-comment"># Dipendenze (Streamlit, NumPy, Pandas, Plotly, Shapely, SciPy, openpyxl)</span>
+<span class="code-command">pip install -r requirements.txt</span>
 
-<span class="code-comment"># Esporta i risultati</span>
-<span class="code-command">compositecheck export --format json --output results/</span>
+<span class="code-comment"># Avvia l'app</span>
+<span class="code-command">streamlit run app.py</span>
 
-<span class="code-comment"># Genera il plot delle tensioni</span>
-<span class="code-command">compositecheck plot --phase post --output stress_diagram.png</span></pre>
+<span class="code-comment"># Branch disponibili</span>
+<span class="code-comment"># More-T-section      ⭐ doppio T composto multi-sezione (riferimento)</span>
+<span class="code-comment"># Sezione-a-doppio-T  doppio T composto, sezione singola</span>
+<span class="code-comment"># More-T-irrigidita   T con nervature d'anima, multi-sezione</span>
+<span class="code-comment"># Sezione-T-irrigidita T con nervature d'anima, sezione singola</span>
+<span class="code-comment"># More-Cassone        cassone multi-anima con ribs, multi-sezione</span>
+<span class="code-comment"># Cassone             cassone con ribs, sezione singola</span></pre>
     </div>
-
-    <div class="info-box">
-      ℹ️ CompositeSectionCheck è uno strumento didattico e professionale open source. <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck">Contribuisci su GitHub →</a>
-    </div>
+    <p class="install-note">
+      ℹ️ Input da file Excel (fogli <b>Sezione</b> e <b>Sollecitazioni</b>) — template <code>Dati_Input_*_multi.xlsx</code> inclusi nel branch. <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck">Tutta la documentazione su GitHub</a>.
+    </p>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section">
   <div class="container">
-    <h2 class="cta-title">Inizia a usare CompositeSectionCheck</h2>
-    <p class="cta-subtitle">Unisciti agli ingegneri che usano CompositeSectionCheck per l'analisi rapida di travi composte. Disponibile come pacchetto Python.</p>
-    <div class="cta-buttons">
-      <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck" class="btn btn-primary" target="_blank" rel="noopener noreferrer">⭐ Star su GitHub</a>
-      <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Documentazione →</a>
+    <div class="cta-box">
+      <div class="cta-glow"></div>
+      <div class="cta-content">
+        <h2 class="cta-title">Verifica il tuo impalcato composto</h2>
+        <p class="cta-subtitle">Doppio T, T irrigidito o cassone: una famiglia di sezione, un branch, tutta la filiera dal getto della soletta alla relazione Word.</p>
+        <div class="cta-buttons">
+          <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck" class="btn btn-primary" target="_blank" rel="noopener noreferrer">⭐ Vai su GitHub</a>
+          <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck/tree/More-T-section" class="btn btn-secondary">⛏️ Branch di riferimento</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <p>CompositeSectionCheck — creato da <a href="https://github.com/DomenicoGaudioso" target="_blank" rel="noopener noreferrer">Domenico Gaudioso</a></p>
-    <p style="margin-top:8px;">NTC2018 · EN 1994-1-1 · Open Source</p>
-  </div>
+<footer class="footer">
+  CompositeSectionCheck — creato da <a href="https://github.com/DomenicoGaudioso/CompositeSectionCheck" target="_blank" rel="noopener noreferrer">Domenico Gaudioso</a> · Parte di <a href="https://civilbox.xyz" target="_blank" rel="noopener noreferrer">civilbox.xyz</a> · <a href="mailto:info@civilbox.xyz">Contattaci</a> · <a href="../">← Sito personale</a>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// MESH ANIMATION
-const canvas = document.getElementById('meshCanvas');
-const ctx = canvas.getContext('2d');
-let nodes = [];
-function resize() { canvas.width = window.innerWidth; canvas.height = Math.max(600, window.innerHeight); }
-window.addEventListener('resize', resize); resize();
+  const MONO = "'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace";
+  function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-class Node { constructor(x,y) { this.x=x; this.y=y; this.vx=(Math.random()-0.5)*0.3; this.vy=(Math.random()-0.5)*0.3; } update() { this.x+=this.vx; this.y+=this.vy; if(this.x<50||this.x>canvas.width-50) this.vx*=-1; if(this.y<50||this.y>canvas.height-50) this.vy*=-1; } }
-for(let i=0;i<60;i++) nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height));
-
-function drawMesh() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.strokeStyle = 'rgba(0,212,170,0.15)'; ctx.lineWidth = 1;
-  for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++) {
-    const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.sqrt(dx*dx+dy*dy);
-    if(d<180) { ctx.globalAlpha = 1-d/180; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.stroke(); }
+  /* ================= HERO MESH BG ================= */
+  const canvas = document.getElementById('meshCanvas');
+  const ctx = canvas.getContext('2d');
+  const heroSection = document.getElementById('heroSection');
+  let nodes = [];
+  let mouse = { x: null, y: null, radius: 200 };
+  let animationId = null;
+  function resizeCanvas() {
+    canvas.width = heroSection.offsetWidth;
+    canvas.height = heroSection.offsetHeight;
+    initNodes();
   }
-  nodes.forEach(n => { n.update(); ctx.fillStyle='#00d4aa'; ctx.beginPath(); ctx.arc(n.x,n.y,3,0,Math.PI*2); ctx.fill(); });
-  requestAnimationFrame(drawMesh);
-}
-drawMesh();
-
-// TERMINAL TYPEWRITER
-const terminalLines = [
-  { type: 'input', text: 'compositecheck init bridge-section' },
-  { type: 'output', text: '✓ Initializing composite section analysis...' },
-  { type: 'input', text: 'compositecheck solve --profile HEA400 --slab 250 --width 3000' },
-  { type: 'output', text: '✓ Steel: HEA400 (A=15900 mm², I=4.50×10⁸ mm⁴)' },
-  { type: 'output', text: '✓ Concrete: t=250mm, b_eff=3000mm, C30/37' },
-  { type: 'output', text: '✓ n = E_s/E_c = 210000/34300 = 6.12' },
-  { type: 'input', text: 'compositecheck analyze --moment 1200' },
-  { type: 'output', text: '✓ Transformed section calculated' },
-  { type: 'output', text: '✓ y_NA = 285.3 mm from top' },
-  { type: 'output', text: '✓ I_tr = 2.84×10⁹ mm⁴' },
-  { type: 'output', text: '✓ Stress field exported' },
-];
-
-let lineIndex = 0, charIndex = 0;
-const termEl = document.getElementById('terminalContent');
-function typeLine() {
-  if(lineIndex >= terminalLines.length) { setTimeout(() => { lineIndex=0; charIndex=0; termEl.innerHTML=''; typeLine(); return; }); }
-  const line = terminalLines[lineIndex];
-  if(charIndex === 0) {
-    const el = document.createElement('div');
-    el.className = 'term-line';
-    if(line.type === 'input') el.innerHTML = '<span class="term-prompt">➜</span> <span class="term-input"></span><span class="cursor"></span>';
-    else el.innerHTML = '<span class="term-output">' + line.text + '</span>';
-    termEl.appendChild(el);
-    termEl.scrollTop = termEl.scrollHeight;
+  class Node {
+    constructor(x, y) {
+      this.x = x; this.y = y;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.size = Math.random() * 1.5 + 1;
+      this.baseColor = 'rgba(10, 10, 15, 0.15)';
+      this.isActive = false;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      if (mouse.x !== null) {
+        let dx = mouse.x - this.x, dy = mouse.y - this.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) { this.isActive = true; this.x += dx / 80; this.y += dy / 80; }
+        else this.isActive = false;
+      } else this.isActive = false;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      if (this.isActive) { ctx.fillStyle = '#00d4aa'; ctx.shadowColor = '#00d4aa'; ctx.shadowBlur = 8; }
+      else { ctx.fillStyle = this.baseColor; ctx.shadowBlur = 0; }
+      ctx.fill(); ctx.shadowBlur = 0;
+    }
   }
-  if(line.type === 'input' && charIndex < line.text.length) {
-    const inputEl = termEl.lastElementChild.querySelector('.term-input');
-    inputEl.textContent += line.text[charIndex];
-    charIndex++;
-    setTimeout(typeLine, 30 + Math.random()*20);
-  } else {
-    const cursor = termEl.lastElementChild?.querySelector('.cursor');
-    if(cursor) cursor.remove();
-    lineIndex++; charIndex = 0;
-    setTimeout(typeLine, 150);
+  function initNodes() {
+    nodes = [];
+    let density = Math.floor((canvas.width * canvas.height) / 15000);
+    density = Math.min(Math.max(density, 30), 120);
+    for (let i = 0; i < density; i++) nodes.push(new Node(Math.random() * canvas.width, Math.random() * canvas.height));
   }
-}
-typeLine();
+  function connectNodes() {
+    let maxDist = 130;
+    for (let a = 0; a < nodes.length; a++) {
+      for (let b = a + 1; b < nodes.length; b++) {
+        let dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < maxDist) {
+          let opacity = 1 - (dist / maxDist);
+          if (nodes[a].isActive || nodes[b].isActive) { ctx.strokeStyle = `rgba(0, 212, 170, ${opacity * 0.6})`; ctx.lineWidth = 1; }
+          else { ctx.strokeStyle = `rgba(10, 10, 15, ${opacity * 0.08})`; ctx.lineWidth = 0.5; }
+          ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(nodes[b].x, nodes[b].y); ctx.stroke();
+        }
+      }
+      if (mouse.x !== null) {
+        let dx = nodes[a].x - mouse.x, dy = nodes[a].y - mouse.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          let opacity = 1 - (dist / mouse.radius);
+          ctx.strokeStyle = `rgba(0, 212, 170, ${opacity * 0.8})`;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = '#00d4aa'; ctx.shadowColor = '#00d4aa'; ctx.shadowBlur = 15;
+          ctx.fill(); ctx.shadowBlur = 0;
+        }
+      }
+    }
+  }
+  function animateMesh() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    nodes.forEach(node => { node.update(); node.draw(); });
+    connectNodes();
+    animationId = requestAnimationFrame(animateMesh);
+  }
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+    if (!animationId) animateMesh();
+  });
+  heroSection.addEventListener('mouseleave', () => {
+    mouse.x = null; mouse.y = null;
+    setTimeout(() => {
+      if (mouse.x === null) {
+        cancelAnimationFrame(animationId); animationId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        nodes.forEach(node => node.draw());
+        connectNodes();
+      }
+    }, 1000);
+  });
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  animateMesh();
 
-// SCROLL REVEAL
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) {
-      e.target.classList.add('in-view');
-      startDemo(e.target.id);
+  /* ================= TERMINALE HERO ================= */
+  const terminal = document.getElementById('terminal');
+  const terminalWrap = document.getElementById('terminalWrap');
+  const canHover = window.matchMedia('(hover: hover)').matches;
+  if (canHover) {
+    terminalWrap.addEventListener('mousemove', (e) => {
+      const rect = terminalWrap.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      terminal.style.transform = `rotateY(${x * 24}deg) rotateX(${-y * 16}deg)`;
+    });
+    terminalWrap.addEventListener('mouseleave', () => { terminal.style.transform = 'rotateY(0deg) rotateX(0deg)'; });
+  }
+  const terminalContent = document.getElementById('terminalContent');
+  let animationActive = true;
+  async function runTerminal(terminalSteps) {
+    while (animationActive) {
+      terminalContent.innerHTML = '';
+      for (const step of terminalSteps) {
+        if (step.type === 'input') {
+          const line = document.createElement('div'); line.className = 'term-line';
+          const prompt = document.createElement('span'); prompt.className = 'term-prompt'; prompt.textContent = '❯ ';
+          const textSpan = document.createElement('span'); textSpan.className = 'term-input';
+          const cursor = document.createElement('span'); cursor.className = 'cursor';
+          line.appendChild(prompt); line.appendChild(textSpan); line.appendChild(cursor);
+          terminalContent.appendChild(line);
+          for (const char of step.text) {
+            if (!animationActive) return;
+            textSpan.textContent += char;
+            terminalContent.scrollTop = terminalContent.scrollHeight;
+            await sleep(28);
+          }
+          cursor.remove();
+          await sleep(280);
+        } else {
+          const line = document.createElement('div');
+          line.className = 'term-line ' + (step.type === 'output-accent' ? 'term-output-accent' : 'term-output');
+          line.textContent = step.text;
+          terminalContent.appendChild(line);
+          terminalContent.scrollTop = terminalContent.scrollHeight;
+          await sleep(140);
+        }
+      }
+      await sleep(7000);
+    }
+  }
+
+  /* ================= COPY ================= */
+  const copyBtn = document.getElementById('copyBtn');
+  const codeContent = document.getElementById('codeContent');
+  copyBtn.addEventListener('click', async () => {
+    const text = codeContent.innerText;
+    const showSuccess = () => {
+      copyBtn.textContent = 'Copiato!';
+      copyBtn.style.color = 'var(--accent)';
+      copyBtn.style.borderColor = 'var(--border-accent)';
+      setTimeout(() => { copyBtn.textContent = 'Copia'; copyBtn.style.color = ''; copyBtn.style.borderColor = ''; }, 2000);
+    };
+    try { await navigator.clipboard.writeText(text); showSuccess(); }
+    catch (err) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
+      document.body.appendChild(textarea); textarea.select();
+      try { document.execCommand('copy'); showSuccess(); }
+      catch (e) { copyBtn.textContent = 'Errore'; setTimeout(() => { copyBtn.textContent = 'Copia'; }, 2000); }
+      document.body.removeChild(textarea);
     }
   });
-}, { threshold: 0.3 });
-document.querySelectorAll('.demo-text').forEach(el => observer.observe(el));
 
-// DEMO ANIMATIONS
-function startDemo(id) {
-  if(id === 'demo1') {
-    document.getElementById('t1cmd').textContent = 'compositecheck phase pre --profile HEA400';
-    setTimeout(() => { document.getElementById('t1out1').style.opacity=1; }, 300);
-    setTimeout(() => { document.getElementById('t1out2').style.opacity=1; }, 800);
-    setTimeout(() => { document.getElementById('t1out3').style.opacity=1; }, 1300);
-    animateStressPlot('stage1', 'pre');
-  } else if(id === 'demo2') {
-    document.getElementById('t2cmd').textContent = 'compositecheck phase post --slab 250 --width 3000';
-    setTimeout(() => { document.getElementById('t2out1').style.opacity=1; }, 300);
-    setTimeout(() => { document.getElementById('t2out2').style.opacity=1; }, 800);
-    setTimeout(() => { document.getElementById('t2out3').style.opacity=1; }, 1300);
-    animateStressPlot('stage2', 'post');
+  /* ================= PALETTE & UTILS ================= */
+  function heatRGB(v) {
+    const stops = [[12,40,92],[24,100,196],[0,190,205],[46,212,125],[242,200,44],[246,120,32],[235,52,42]];
+    v = Math.min(1, Math.max(0, v)) * (stops.length - 1);
+    const i = Math.floor(v), f = v - i, a = stops[i], b = stops[Math.min(i + 1, stops.length - 1)];
+    return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
   }
-}
-
-// STRESS PLOT ANIMATION
-function animateStressPlot(canvasId, phase) {
-  const c = document.getElementById(canvasId);
-  const cx = c.getContext('2d');
-  c.width = c.offsetWidth; c.height = c.offsetHeight;
-
-  const W = c.width, H = c.height;
-  const margin = { top: 40, right: 180, bottom: 40, left: 60 };
-  const plotW = W - margin.left - margin.right;
-  const plotH = H - margin.top - margin.bottom;
-
-  const steelH = 390, tf = 19, tw = 11;
-  const slabT = phase === 'post' ? 250 : 0;
-  const totalH = steelH + slabT;
-  const scale = plotH / (totalH + 100);
-  const baseY = margin.top + (totalH + 50) * scale;
-  const mapY = y => baseY - y * scale;
-
-  const yNA_pre = steelH / 2;
-  const yNA_post = 285.3;
-  const yNA = phase === 'pre' ? yNA_pre : yNA_post;
-  const naY = mapY(yNA);
-
-  // Grid
-  cx.strokeStyle = '#242938'; cx.lineWidth = 1;
-  for(let i=0; i<=5; i++) {
-    const y = margin.top + i * plotH / 5;
-    cx.beginPath(); cx.moveTo(margin.left, y); cx.lineTo(W - margin.right, y); cx.stroke();
+  function heatCSS(v, alpha) {
+    const c = heatRGB(v);
+    return 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',' + (alpha === undefined ? 1 : alpha) + ')';
   }
-
-  // Y-axis
-  cx.strokeStyle = '#596174'; cx.lineWidth = 1.5;
-  cx.beginPath(); cx.moveTo(margin.left, margin.top); cx.lineTo(margin.left, H - margin.bottom); cx.stroke();
-  cx.fillStyle = '#8b91a7'; cx.font = '11px monospace';
-  cx.fillText('y [mm]', margin.left - 10, margin.top - 8);
-
-  // Y labels
-  for(let i=0; i<=4; i++) {
-    const yy = margin.top + i * plotH / 4;
-    const val = Math.round(totalH * (1 - i/4));
-    cx.beginPath(); cx.moveTo(margin.left - 8, yy); cx.lineTo(margin.left, yy); cx.stroke();
-    cx.fillText(val.toString(), margin.left - 14, yy + 4);
+  function timecode(lt) {
+    const m = Math.floor(lt / 60), s = Math.floor(lt % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp01(v) { return Math.min(1, Math.max(0, v)); }
+  function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function poly(ctx2, pts, fill, stroke, lw) {
+    if (!pts.length) return;
+    ctx2.beginPath();
+    ctx2.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx2.lineTo(pts[i][0], pts[i][1]);
+    ctx2.closePath();
+    if (fill) { ctx2.fillStyle = fill; ctx2.fill(); }
+    if (stroke) { ctx2.strokeStyle = stroke; ctx2.lineWidth = lw || 2; ctx2.stroke(); }
+  }
+  function strokeDrawOn(ctx2, pts, progress) {
+    if (!pts.length) return;
+    let per = 0;
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i], b = pts[(i + 1) % pts.length];
+      per += Math.hypot(b[0] - a[0], b[1] - a[1]);
+    }
+    const p = clamp01(progress);
+    ctx2.beginPath();
+    ctx2.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx2.lineTo(pts[i][0], pts[i][1]);
+    ctx2.closePath();
+    ctx2.setLineDash([per * p, per]);
+    ctx2.lineDashOffset = 0;
+    ctx2.stroke();
+    ctx2.setLineDash([]);
+  }
+  function hatch(ctx2, x, y, w, h, gap, color) {
+    ctx2.save();
+    ctx2.beginPath(); ctx2.rect(x, y, w, h); ctx2.clip();
+    ctx2.strokeStyle = color; ctx2.lineWidth = 1;
+    for (let i = -h; i < w + h; i += gap) {
+      ctx2.beginPath(); ctx2.moveTo(x + i, y + h); ctx2.lineTo(x + i + h, y); ctx2.stroke();
+    }
+    ctx2.restore();
+  }
+  function label(ctx2, txt, x, y, color, size, align) {
+    ctx2.font = (size || 11) + 'px ' + MONO;
+    ctx2.fillStyle = color || 'rgba(240,240,245,0.85)';
+    ctx2.textAlign = align || 'left';
+    ctx2.fillText(txt, x, y);
+    ctx2.textAlign = 'left';
   }
 
-  const centerX = margin.left + plotW / 2 - 40;
+  /* ============================================================
+     CSC — STAGE 1 · FASI COSTRUTTIVE (sezione trasformata)
+     ============================================================ */
+  const CSC_PHASES = [
+    { name: 'G1 · SOLO ACCIAIO', short: 'G1', n: 1.0,  note: 'trave metallica in cantiere' },
+    { name: 'GETTO SOLETTA',     short: 'getto', n: 6.42, note: 'n₀ = E_s / E_cm' },
+    { name: 'POST-COMPOSITO',    short: 'post',  n: 6.42, note: 'sezione trasformata' },
+    { name: 'RITIRO + FLUAGE',   short: 'n∞',    n: 12.8, note: 'n∞ = n₀ (1 + φ)' },
+    { name: 'FESSURATO SLE',     short: 'SLE',   n: 12.8, note: 'solo armatura tesa' }
+  ];
+  function drawSteelI(ctx2, cx, cy, s, alpha) {
+    // doppio T saldato centrato in cx,cy — h totale ~ 3.4s
+    const hw = 1.55 * s, ft = 0.16 * s, fh = 0.28 * s, ww = 0.14 * s, wh = 2.6 * s;
+    ctx2.globalAlpha = alpha;
+    ctx2.fillStyle = '#3a3f4a';
+    ctx2.strokeStyle = 'rgba(0,212,170,0.85)';
+    ctx2.lineWidth = 1.6;
+    ctx2.fillRect(cx - hw, cy - wh / 2 - fh, 2 * hw, ft); ctx2.strokeRect(cx - hw, cy - wh / 2 - fh, 2 * hw, ft);
+    ctx2.fillRect(cx - hw, cy + wh / 2, 2 * hw, ft);     ctx2.strokeRect(cx - hw, cy + wh / 2, 2 * hw, ft);
+    ctx2.fillRect(cx - ww / 2, cy - wh / 2, ww, wh);      ctx2.strokeRect(cx - ww / 2, cy - wh / 2, ww, wh);
+    ctx2.globalAlpha = 1;
+  }
+  function drawSlab(ctx2, cx, cy, s, alpha, cracked) {
+    const hw = 2.5 * s, th = 0.5 * s;
+    const y = cy - 2.6 * s / 2 - 0.28 * s - 0.16 * s - th;
+    ctx2.globalAlpha = alpha;
+    ctx2.fillStyle = cracked ? 'rgba(120,124,134,0.45)' : '#6b6f7a';
+    ctx2.fillRect(cx - hw, y, 2 * hw, th);
+    ctx2.strokeStyle = cracked ? 'rgba(246,120,32,0.9)' : 'rgba(0,212,170,0.85)';
+    ctx2.lineWidth = 1.6;
+    ctx2.strokeRect(cx - hw, y, 2 * hw, th);
+    if (cracked) {
+      ctx2.strokeStyle = 'rgba(246,120,32,0.9)';
+      ctx2.lineWidth = 1.2;
+      for (let i = -3; i <= 3; i++) {
+        ctx2.beginPath();
+        ctx2.moveTo(cx + i * hw / 3.5, y);
+        ctx2.lineTo(cx + i * hw / 3.5 + 8, y + th);
+        ctx2.stroke();
+      }
+    } else {
+      hatch(ctx2, cx - hw, y, 2 * hw, th, 9, 'rgba(240,240,245,0.28)');
+    }
+    // pioli Nelson
+    ctx2.fillStyle = '#00d4aa';
+    for (let i = -3; i <= 3; i++) {
+      ctx2.fillRect(cx + i * hw / 3.8 - 1.5, y + th - 1, 3, 7);
+    }
+    ctx2.globalAlpha = 1;
+  }
+  function drawStressProfile(ctx2, x0, yTop, yBot, sigTop, sigBot, alpha) {
+    // diagramma σ sull'altezza: asse verticale in x0, σ positiva a destra
+    const H = yBot - yTop, sc = 3.2;
+    ctx2.save();
+    ctx2.globalAlpha = alpha;
+    ctx2.strokeStyle = 'rgba(240,240,245,0.35)';
+    ctx2.lineWidth = 1;
+    ctx2.beginPath(); ctx2.moveTo(x0, yTop - 12); ctx2.lineTo(x0, yBot + 12); ctx2.stroke();
+    const xT = x0 + sigTop * sc, xB = x0 + sigBot * sc;
+    // fill
+    ctx2.beginPath();
+    ctx2.moveTo(x0, yTop); ctx2.lineTo(xT, yTop); ctx2.lineTo(xB, yBot); ctx2.lineTo(x0, yBot); ctx2.closePath();
+    const g = ctx2.createLinearGradient(x0, 0, x0 + 40, 0);
+    g.addColorStop(0, 'rgba(0,212,170,0.05)');
+    g.addColorStop(1, 'rgba(0,212,170,0.22)');
+    ctx2.fillStyle = g; ctx2.fill();
+    ctx2.strokeStyle = '#00d4aa'; ctx2.lineWidth = 2; ctx2.stroke();
+    // asse neutro
+    let yN = null;
+    if (sigTop !== sigBot) {
+      const t = sigTop / (sigTop - sigBot);
+      if (t >= -0.02 && t <= 1.02) yN = yTop + t * H;
+    }
+    if (yN !== null) {
+      ctx2.setLineDash([5, 4]);
+      ctx2.strokeStyle = 'rgba(242,200,44,0.85)';
+      ctx2.beginPath(); ctx2.moveTo(x0 - 26, yN); ctx2.lineTo(x0 + 44, yN); ctx2.stroke();
+      ctx2.setLineDash([]);
+      label(ctx2, 'N.A.', x0 + 48, yN + 3, 'rgba(242,200,44,0.9)', 9);
+    }
+    label(ctx2, (sigTop >= 0 ? '+' : '') + sigTop.toFixed(0), xT + (sigTop >= 0 ? 6 : -34), yTop + 4, 'rgba(240,240,245,0.85)', 10);
+    label(ctx2, (sigBot >= 0 ? '+' : '') + sigBot.toFixed(0), xB + (sigBot >= 0 ? 6 : -34), yBot + 4, 'rgba(240,240,245,0.85)', 10);
+    label(ctx2, 'σ [MPa]  + trazione', x0 - 26, yTop - 20, 'rgba(138,138,154,1)', 9);
+    ctx2.restore();
+  }
+  function drawPhaseStage(ctx2, W, H, lt, gt, st) {
+    ctx2.clearRect(0, 0, W, H);
+    // fondo griglia
+    ctx2.strokeStyle = 'rgba(255,255,255,0.03)'; ctx2.lineWidth = 1;
+    for (let x = 0; x < W; x += 42) { ctx2.beginPath(); ctx2.moveTo(x, 0); ctx2.lineTo(x, H); ctx2.stroke(); }
+    for (let y = 0; y < H; y += 42) { ctx2.beginPath(); ctx2.moveTo(0, y); ctx2.lineTo(W, y); ctx2.stroke(); }
 
-  // Concrete slab
-  if(phase === 'post') {
-    const slabW = Math.min(200, 3000 * scale * 0.4);
-    cx.fillStyle = 'rgba(145,164,255,0.7)';
-    cx.strokeStyle = '#aebaff';
-    cx.fillRect(centerX - slabW/2, mapY(steelH + slabT), slabW, slabT * scale);
-    cx.strokeRect(centerX - slabW/2, mapY(steelH + slabT), slabW, slabT * scale);
-    cx.fillStyle = '#fff'; cx.fillText('Soletta', centerX, mapY(steelH + slabT/2) + 4);
+    const seg = 5.2;                       // secondi per fase
+    const idx = Math.floor(lt / seg) % CSC_PHASES.length;
+    const ph = CSC_PHASES[idx];
+    const fp = ease(clamp01((lt % seg) / 1.1));  // progresso entrata fase
+    const prev = CSC_PHASES[(idx + CSC_PHASES.length - 1) % CSC_PHASES.length];
+
+    const cx = W * 0.32, cy = H * 0.52, s = Math.min(W, H) * 0.135;
+
+    // slab: entra dalla fase 1
+    let slabA = 0, cracked = false;
+    if (idx === 0) slabA = 0.12;
+    else if (idx === 1) slabA = fp;
+    else { slabA = 1; cracked = (idx === 4); }
+    if (idx === 0) {
+      ctx2.setLineDash([6, 5]); drawSlab(ctx2, cx, cy, s, 0.18, false); ctx2.setLineDash([]);
+    } else drawSlab(ctx2, cx, cy, s, slabA, cracked);
+    drawSteelI(ctx2, cx, cy, s, 1);
+
+    // quote
+    label(ctx2, 'soletta C30/37', cx - 2.4 * s, cy - 2.35 * s, 'rgba(138,138,154,1)', 10);
+    label(ctx2, 'doppio T S355', cx + 1.7 * s, cy + 1.5 * s, 'rgba(138,138,154,1)', 10);
+
+    // profilo tensionale a destra
+    const n = lerp(prev.n, ph.n, fp);
+    let sigTop, sigBot;
+    if (idx === 0) { sigTop = -18 * fp; sigBot = 145 * fp; }
+    else if (idx === 1) { sigTop = lerp(-18, -34, fp); sigBot = lerp(145, 96, fp); }
+    else if (idx === 2) { sigTop = lerp(-34, -48, fp); sigBot = lerp(96, 118, fp); }
+    else if (idx === 3) { sigTop = lerp(-48, -72, fp); sigBot = lerp(118, 92, fp); }
+    else { sigTop = lerp(-72, -8, fp); sigBot = lerp(92, 158, fp); }
+    drawStressProfile(ctx2, W * 0.72, H * 0.2, H * 0.82, sigTop, sigBot, 1);
+
+    // callout fase
+    label(ctx2, ph.name, W * 0.72, H * 0.1, '#00d4aa', 13);
+    label(ctx2, ph.note, W * 0.72, H * 0.1 + 18, 'rgba(138,138,154,1)', 10);
+
+    // HUD
+    const ro = document.getElementById('ro1');
+    if (ro) ro.innerHTML = 'fase <b>' + ph.short + '</b> · n = <b>' + n.toFixed(2) + '</b> · σinf = <b>' + sigBot.toFixed(0) + '</b> MPa';
   }
 
-  // Steel I-beam
-  const flangeW = 100, webW = tw * 3;
-  cx.fillStyle = '#d4d8e7'; cx.strokeStyle = '#fff';
-  cx.fillRect(centerX - flangeW/2, mapY(steelH), flangeW, tf * scale);
-  cx.strokeRect(centerX - flangeW/2, mapY(steelH), flangeW, tf * scale);
-  cx.fillRect(centerX - flangeW/2, mapY(tf), flangeW, tf * scale);
-  cx.strokeRect(centerX - flangeW/2, mapY(tf), flangeW, tf * scale);
-  cx.fillRect(centerX - webW/2, mapY(steelH), webW, (steelH - 2*tf) * scale);
-  cx.strokeRect(centerX - webW/2, mapY(steelH), webW, (steelH - 2*tf) * scale);
-  cx.fillStyle = '#0a0a10'; cx.fillText('HEA 400', centerX, mapY(steelH/2) + 4);
-
-  // Neutral axis
-  cx.strokeStyle = '#ff7185'; cx.lineWidth = 1.5; cx.setLineDash([6,5]);
-  cx.beginPath(); cx.moveTo(margin.left, naY); cx.lineTo(W - margin.right, naY); cx.stroke();
-  cx.setLineDash([]);
-  cx.fillStyle = '#ff7185'; cx.fillText('NA ' + yNA.toFixed(1) + ' mm', W - margin.right + 10, naY + 4);
-
-  // Stress diagram
-  const stressX = W - margin.right + 60;
-  const stressMaxWidth = 90;
-
-  cx.strokeStyle = '#596174'; cx.lineWidth = 1.5;
-  cx.beginPath(); cx.moveTo(stressX, margin.top); cx.lineTo(stressX, H - margin.bottom); cx.stroke();
-  cx.fillStyle = '#8b91a7'; cx.fillText('σ [MPa]', stressX, margin.top - 8);
-
-  if(phase === 'pre') {
-    const maxTens = 187.4, maxComp = 187.4;
-    const tensW = Math.min(stressMaxWidth, maxTens / 400 * stressMaxWidth);
-    const compW = Math.min(stressMaxWidth, maxComp / 400 * stressMaxWidth);
-
-    cx.fillStyle = 'rgba(34,197,86,0.7)';
-    cx.beginPath();
-    cx.moveTo(stressX, naY);
-    cx.lineTo(stressX, mapY(0));
-    cx.lineTo(stressX + tensW, mapY(0));
-    cx.closePath(); cx.fill();
-
-    cx.fillStyle = 'rgba(239,68,68,0.7)';
-    cx.beginPath();
-    cx.moveTo(stressX, mapY(steelH));
-    cx.lineTo(stressX, naY);
-    cx.lineTo(stressX - compW, mapY(steelH));
-    cx.closePath(); cx.fill();
-
-    cx.fillStyle = '#22c55e'; cx.fillText('+' + maxTens.toFixed(1), stressX + tensW + 8, mapY(0) + 4);
-    cx.fillStyle = '#ef4444'; cx.fillText('-' + maxComp.toFixed(1), stressX - compW - 45, mapY(steelH) + 12);
-  } else {
-    const sigS_top = 89.2, sigS_bot = 156.2, sigC = 12.8;
-    const steelTopY = mapY(steelH), steelBotY = mapY(0);
-
-    const steelW_tens = Math.min(stressMaxWidth, sigS_bot / 400 * stressMaxWidth);
-    const steelW_comp = Math.min(stressMaxWidth, sigS_top / 400 * stressMaxWidth);
-    const concW = Math.min(stressMaxWidth * 0.6, sigC / 50 * stressMaxWidth * 0.6);
-
-    cx.fillStyle = 'rgba(168,85,247,0.75)';
-    cx.beginPath();
-    cx.moveTo(stressX, mapY(steelH + slabT));
-    cx.lineTo(stressX, mapY(steelH));
-    cx.lineTo(stressX - concW, mapY(steelH));
-    cx.lineTo(stressX - concW * 0.7, mapY(steelH + slabT/2));
-    cx.closePath(); cx.fill();
-
-    cx.fillStyle = 'rgba(34,197,86,0.75)';
-    cx.beginPath();
-    cx.moveTo(stressX, naY);
-    cx.lineTo(stressX, steelBotY);
-    cx.lineTo(stressX + steelW_tens, steelBotY);
-    cx.closePath(); cx.fill();
-
-    cx.fillStyle = 'rgba(239,68,68,0.7)';
-    cx.beginPath();
-    cx.moveTo(stressX, steelTopY);
-    cx.lineTo(stressX, naY);
-    cx.lineTo(stressX - steelW_comp, steelTopY);
-    cx.closePath(); cx.fill();
-
-    cx.fillStyle = '#d7c8ff'; cx.fillText('σ_c=' + sigC.toFixed(1), stressX - concW - 45, mapY(steelH + slabT/2));
-    cx.fillStyle = '#22c55e'; cx.fillText('+' + sigS_bot.toFixed(1), stressX + steelW_tens + 8, steelBotY + 4);
-    cx.fillStyle = '#ffb2bd'; cx.fillText('-' + sigS_top.toFixed(1), stressX - steelW_comp - 45, steelTopY + 12);
+  /* ============================================================
+     CSC — STAGE 2 · FAMIGLIE DI SEZIONE
+     ============================================================ */
+  const FAMIGLIE = [
+    { key: 'DOPPIO T', branch: 'More-T-section', note: 'soletta + 2 pioli/ala · classe 1-4' },
+    { key: 'T IRRIGIDITO', branch: 'More-T-irrigidita', note: 'nervature piatto/T/canaletta' },
+    { key: 'CASSONE', branch: 'More-Cassone', note: '3 anime · q = Mt/(2·Am)' }
+  ];
+  function drawFamilyIT(ctx2, cx, cy, s, stiff, a) {
+    ctx2.globalAlpha = a;
+    drawSlab(ctx2, cx, cy, s, 1, false);
+    drawSteelI(ctx2, cx, cy, s, 1);
+    if (stiff) {
+      ctx2.fillStyle = '#00d4aa';
+      const wh = 2.6 * s, ww = 0.14 * s;
+      for (const yy of [-0.32, 0.0, 0.32]) {
+        ctx2.fillRect(cx + ww / 2, cy + yy * wh - 2.2, 0.5 * s, 4.4);
+        ctx2.fillRect(cx - ww / 2 - 0.5 * s, cy + yy * wh - 2.2, 0.5 * s, 4.4);
+      }
+      label(ctx2, 'irrigidimenti longitudinali', cx + 2.0 * s, cy - 0.35 * wh, 'rgba(0,212,170,0.9)', 9);
+    }
+    ctx2.globalAlpha = 1;
   }
-}
+  function drawFamilyCassone(ctx2, cx, cy, s, a) {
+    ctx2.globalAlpha = a;
+    // soletta
+    const hw = 2.6 * s;
+    ctx2.fillStyle = '#6b6f7a';
+    ctx2.fillRect(cx - hw, cy - 2.2 * s, 2 * hw, 0.42 * s);
+    hatch(ctx2, cx - hw, cy - 2.2 * s, 2 * hw, 0.42 * s, 9, 'rgba(240,240,245,0.28)');
+    ctx2.strokeStyle = 'rgba(0,212,170,0.85)'; ctx2.lineWidth = 1.6;
+    ctx2.strokeRect(cx - hw, cy - 2.2 * s, 2 * hw, 0.42 * s);
+    // cassone trapezoidale: 2 anime esterne inclinate + 1 interna
+    ctx2.fillStyle = '#3a3f4a';
+    const yT = cy - 1.78 * s, yB = cy + 1.5 * s;
+    const pts = [
+      // piattabanda sup
+      [cx - 2.2 * s, yT], [cx + 2.2 * s, yT], [cx + 2.2 * s, yT + 0.18 * s], [cx - 2.2 * s, yT + 0.18 * s]
+    ];
+    poly(ctx2, pts, '#3a3f4a', 'rgba(0,212,170,0.85)', 1.6);
+    // anima esterna sx inclinata
+    poly(ctx2, [[cx - 2.2 * s, yT], [cx - 2.2 * s, yT + 0.18 * s], [cx - 1.3 * s, yB], [cx - 1.55 * s, yB]], '#2a2e37', 'rgba(0,212,170,0.85)', 1.5);
+    // anima esterna dx
+    poly(ctx2, [[cx + 2.2 * s, yT], [cx + 2.2 * s, yT + 0.18 * s], [cx + 1.55 * s, yB], [cx + 1.3 * s, yB]], '#2a2e37', 'rgba(0,212,170,0.85)', 1.5);
+    // anima interna
+    ctx2.fillRect(cx - 0.09 * s, yT, 0.18 * s, yB - yT);
+    ctx2.strokeRect(cx - 0.09 * s, yT, 0.18 * s, yB - yT);
+    // piattabanda inf
+    poly(ctx2, [[cx - 1.55 * s, yB], [cx + 1.55 * s, yB], [cx + 1.55 * s, yB + 0.18 * s], [cx - 1.55 * s, yB + 0.18 * s]], '#3a3f4a', 'rgba(0,212,170,0.85)', 1.6);
+    // ribs su piattabanda
+    ctx2.fillStyle = '#00d4aa';
+    for (const xx of [-1.6, -0.8, 0.8, 1.6]) {
+      ctx2.fillRect(cx + xx * s - 1.5, yT + 0.18 * s, 3, 0.34 * s);
+    }
+    // flusso torsionale
+    ctx2.setLineDash([4, 4]);
+    ctx2.strokeStyle = 'rgba(242,200,44,0.9)';
+    ctx2.strokeRect(cx - 1.35 * s, yT + 0.3 * s, 2.7 * s, yB - yT - 0.35 * s);
+    ctx2.setLineDash([]);
+    label(ctx2, 'Am', cx - 0.3 * s, cy, 'rgba(242,200,44,0.9)', 11);
+    label(ctx2, 'irrigidimenti piattabanda', cx - 2.5 * s, yT - 10, 'rgba(0,212,170,0.9)', 9);
+    ctx2.globalAlpha = 1;
+  }
+  function drawFamilyStage(ctx2, W, H, lt, gt, st) {
+    ctx2.clearRect(0, 0, W, H);
+    ctx2.strokeStyle = 'rgba(255,255,255,0.03)'; ctx2.lineWidth = 1;
+    for (let x = 0; x < W; x += 42) { ctx2.beginPath(); ctx2.moveTo(x, 0); ctx2.lineTo(x, H); ctx2.stroke(); }
+    for (let y = 0; y < H; y += 42) { ctx2.beginPath(); ctx2.moveTo(0, y); ctx2.lineTo(W, y); ctx2.stroke(); }
+
+    const seg = 7.5;
+    const idx = Math.floor(lt / seg) % FAMIGLIE.length;
+    const f = FAMIGLIE[idx];
+    const fp = ease(clamp01((lt % seg) / 1.0));
+    const cx = W * 0.42, cy = H * 0.54, s = Math.min(W, H) * 0.145;
+
+    if (idx === 0) drawFamilyIT(ctx2, cx, cy, s, false, fp);
+    else if (idx === 1) drawFamilyIT(ctx2, cx, cy, s, true, fp);
+    else drawFamilyCassone(ctx2, cx, cy, s, fp);
+
+    // pannello info destro
+    label(ctx2, f.key, W * 0.72, H * 0.3, '#00d4aa', 15);
+    label(ctx2, f.branch, W * 0.72, H * 0.3 + 22, 'rgba(240,240,245,0.9)', 11);
+    label(ctx2, f.note, W * 0.72, H * 0.3 + 42, 'rgba(138,138,154,1)', 10);
+
+    const famEl = document.getElementById('famName');
+    if (famEl) famEl.textContent = f.key;
+    const ro = document.getElementById('ro2');
+    if (ro) ro.innerHTML = 'branch <b>' + f.branch + '</b> · multi-sezione Excel';
+  }
+
+  /* ============================================================
+     CSC — STAGE 3 · VERIFICHE & REPORT
+     ============================================================ */
+  const CSC_CHECKS = [
+    { name: 'SLU flessione M+',  u: 0.62, tag: 'elastica + plastica' },
+    { name: 'SLU taglio V',      u: 0.48, tag: 'k_τ EN 1993-1-5' },
+    { name: 'Interazione M-V',   u: 0.55, tag: 'EN 1992-1-1 §6.2.3' },
+    { name: 'Pioli Nelson',      u: 0.71, tag: 'scorrimento SLU' },
+    { name: 'Saldature gola',    u: 0.40, tag: 'Jourawski' },
+    { name: 'Fatica ζ',          u: 0.33, tag: 'web breathing' }
+  ];
+  function drawCheckStage(ctx2, W, H, lt, gt, st) {
+    ctx2.clearRect(0, 0, W, H);
+    ctx2.strokeStyle = 'rgba(255,255,255,0.03)'; ctx2.lineWidth = 1;
+    for (let x = 0; x < W; x += 42) { ctx2.beginPath(); ctx2.moveTo(x, 0); ctx2.lineTo(x, H); ctx2.stroke(); }
+    for (let y = 0; y < H; y += 42) { ctx2.beginPath(); ctx2.moveTo(0, y); ctx2.lineTo(W, y); ctx2.stroke(); }
+
+    const cycle = 13;
+    const lp = lt % cycle;
+    const x0 = W * 0.08, y0 = H * 0.16, rowH = Math.min(52, H * 0.105), bw = W * 0.44;
+    let maxU = 0;
+
+    label(ctx2, 'VERIFICHE · UTILIZZO D/C', x0, y0 - 22, '#00d4aa', 12);
+
+    CSC_CHECKS.forEach((c, i) => {
+      const appear = ease(clamp01((lp - i * 0.55) / 0.9));
+      if (appear <= 0) return;
+      const y = y0 + i * rowH;
+      const fill = c.u * appear * ease(clamp01((lp - 1.2 - i * 0.4) / 2.2));
+      maxU = Math.max(maxU, c.u * Math.min(1, Math.max(0, (lp - 1.2 - i * 0.4) / 2.2)));
+      ctx2.globalAlpha = appear;
+      label(ctx2, c.name, x0, y + 4, 'rgba(240,240,245,0.92)', 12);
+      label(ctx2, c.tag, x0, y + 20, 'rgba(138,138,154,1)', 9);
+      // bar
+      ctx2.fillStyle = 'rgba(255,255,255,0.06)';
+      ctx2.fillRect(x0 + 200, y - 8, bw, 18);
+      const col = fill > 0.85 ? '#f67820' : (fill > 0.65 ? '#f2c82c' : '#00d4aa');
+      ctx2.fillStyle = col;
+      ctx2.fillRect(x0 + 200, y - 8, bw * clamp01(fill), 18);
+      ctx2.strokeStyle = 'rgba(255,255,255,0.12)';
+      ctx2.strokeRect(x0 + 200, y - 8, bw, 18);
+      // soglia 1.0
+      ctx2.strokeStyle = 'rgba(235,52,42,0.55)';
+      ctx2.setLineDash([3, 3]);
+      ctx2.beginPath(); ctx2.moveTo(x0 + 200 + bw, y - 12); ctx2.lineTo(x0 + 200 + bw, y + 14); ctx2.stroke();
+      ctx2.setLineDash([]);
+      if (appear > 0.9) {
+        const ok = c.u < 1;
+        label(ctx2, (c.u * 100).toFixed(0) + '% ' + (ok ? '✓' : '✗'), x0 + 210 + bw, y + 5, ok ? '#00d4aa' : '#eb342a', 11);
+      }
+      ctx2.globalAlpha = 1;
+    });
+
+    // side: sintesi report
+    const rx = W * 0.78, ry = H * 0.3;
+    label(ctx2, 'RELAZIONE .DOCX', rx, ry - 24, '#00d4aa', 12);
+    const lines = [
+      'Tabelle di sintesi M+ / M−',
+      'Utilizzi per lamiera (fyd)',
+      'Sezione efficace Cl. 4',
+      'Fatica Δσ · Δτ · ζ',
+      'Pioli · cordoni · taglio'
+    ];
+    lines.forEach((t, i) => {
+      const ap = clamp01((lp - 3 - i * 0.5) / 0.6);
+      ctx2.globalAlpha = ap;
+      label(ctx2, (ap > 0.95 ? '✓ ' : '· ') + t, rx, ry + i * 24, ap > 0.95 ? 'rgba(240,240,245,0.92)' : 'rgba(138,138,154,0.8)', 10.5);
+      ctx2.globalAlpha = 1;
+    });
+    if (lp > 7) {
+      const blink = Math.sin(gt * 5) > -0.2 ? 1 : 0.45;
+      ctx2.globalAlpha = blink;
+      label(ctx2, '▸ SGMPy_word · report pronto', rx, ry + 5 * 24 + 10, '#00d4aa', 11);
+      ctx2.globalAlpha = 1;
+    }
+
+    const ro = document.getElementById('ro3');
+    if (ro) ro.innerHTML = 'utilizzo max <b>' + (maxU * 100).toFixed(0) + '%</b> · ζ = <b>0.33</b> · esito <b>OK</b>';
+  }
+
+  /* ============================================================
+     CSC — TERMINALI DEMO
+     ============================================================ */
+  const SITE_TERMINAL = [
+    { type: 'input', text: 'git clone -b More-T-section CompositeSectionCheck' },
+    { type: 'output', text: '✓ branch di riferimento · doppio T composto' },
+    { type: 'input', text: 'streamlit run app.py' },
+    { type: 'output', text: '✓ caricato: Dati_Input_T_multi.xlsx' },
+    { type: 'output', text: '  ├─ sezioni: 12  · azioni: G1 G2 R MQ Mfat' },
+    { type: 'output', text: '  ├─ fasi: acciaio · getto · post · n∞ · fessurato' },
+    { type: 'input', text: 'verifica --code NTC2018 --combo slu,rara,freq,qp' },
+    { type: 'output', text: '✓ classi sezionali: 2 · 3 · 4 (efficace EN 1993-1-5)' },
+    { type: 'output', text: '✓ flessione M+ M− · taglio k_τ · interazione M-V' },
+    { type: 'output', text: '✓ pioli Nelson · cordoni Jourawski · fatica ζ' },
+    { type: 'output-accent', text: '  └─ esito: TUTTE LE SEZIONI OK  ✓' },
+    { type: 'input', text: 'genera_report.py --formato word' },
+    { type: 'output', text: '✓ Relazione_Composita.docx · 34 pagine' },
+  ];
+  async function runTerm1() {
+    await typeInto(document.getElementById('t1cmd'), 'csc fasi --da G1 --a fessurato', 42);
+    await sleep(500); showOut('t1out1');
+    await sleep(1200); showOut('t1out2');
+    await sleep(1400); showOut('t1out3');
+  }
+  async function runTerm2() {
+    await typeInto(document.getElementById('t2cmd'), 'csc famiglie --tutto', 42);
+    await sleep(500); showOut('t2out1');
+    await sleep(1300); showOut('t2out2');
+    await sleep(1400); showOut('t2out3');
+  }
+  async function runTerm3() {
+    await typeInto(document.getElementById('t3cmd'), 'csc verifica --slu --sle --fatica --report', 42);
+    await sleep(500); showOut('t3out1');
+    await sleep(1300); showOut('t3out2');
+    await sleep(1300); showOut('t3out3');
+  }
+  const SITE_RUN = { demo1: runTerm1, demo2: runTerm2, demo3: runTerm3 };
+  const SITE_Tm = 30;
+
+  /* ---- 3D builders ---- */
+  function beamSolid(w, h, d, color) {
+    const m = new THREE.MeshPhongMaterial({ color: color, transparent: true, opacity: 0.92 });
+    return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m);
+  }
+  function buildBeam3D(scene, state) {
+    const g = new THREE.Group();
+    // soletta
+    const slab = beamSolid(9, 0.7, 3.2, 0x8a8f9a); slab.position.set(0, 3.1, 0); g.add(slab);
+    // trave I
+    const ft = beamSolid(3.4, 0.45, 3.0, 0x3a404c); ft.position.set(0, 2.45, 0); g.add(ft);
+    const fb = beamSolid(3.0, 0.45, 3.0, 0x3a404c); fb.position.set(0, -1.6, 0); g.add(fb);
+    const web = beamSolid(0.35, 3.7, 3.0, 0x2a2e37); web.position.set(0, 0.55, 0); g.add(web);
+    // pioli
+    for (let i = -3; i <= 3; i++) {
+      const stud = beamSolid(0.14, 0.5, 0.14, 0x00d4aa);
+      stud.position.set(i * 1.0, 2.7, 0); g.add(stud);
+    }
+    scene.add(g);
+    state.update = (t) => { g.rotation.y = 0; };
+  }
+  function buildFamilies3D(scene, state) {
+    const g = new THREE.Group();
+    // cassone trapezoidale estruso
+    const shape = new THREE.Shape();
+    shape.moveTo(-3.2, 1.8); shape.lineTo(3.2, 1.8); shape.lineTo(2.2, -1.6); shape.lineTo(-2.2, -1.6); shape.lineTo(-3.2, 1.8);
+    const hole = new THREE.Path();
+    hole.moveTo(-2.85, 1.5); hole.lineTo(2.85, 1.5); hole.lineTo(1.95, -1.3); hole.lineTo(-1.95, -1.3); hole.lineTo(-2.85, 1.5);
+    shape.holes.push(hole);
+    const ext = new THREE.ExtrudeGeometry(shape, { depth: 8, bevelEnabled: false });
+    ext.translate(0, 0, -4);
+    const mesh = new THREE.Mesh(ext, new THREE.MeshPhongMaterial({ color: 0x3a404c, transparent: true, opacity: 0.9 }));
+    g.add(mesh);
+    const slab = beamSolid(8.4, 0.55, 8, 0x8a8f9a); slab.position.set(0, 2.05, 0); g.add(slab);
+    const web2 = beamSolid(0.3, 3.3, 8, 0x2a2e37); web2.position.set(0, 0.05, 0); g.add(web2);
+    scene.add(g);
+  }
+  function buildChecks3D(scene, state) {
+    const g = new THREE.Group();
+    const slab = beamSolid(9, 0.7, 2.4, 0x8a8f9a); slab.position.set(0, 3.1, 0); g.add(slab);
+    const ft = beamSolid(3.4, 0.45, 2.4, 0x3a404c); ft.position.set(0, 2.45, 0); g.add(ft);
+    const fb = beamSolid(3.0, 0.45, 2.4, 0x3a404c); fb.position.set(0, -1.6, 0); g.add(fb);
+    const web = beamSolid(0.35, 3.7, 2.4, 0x2a2e37); web.position.set(0, 0.55, 0); g.add(web);
+    // barre utilizzo come colonne
+    const bars = [];
+    for (let i = 0; i < 6; i++) {
+      const b = beamSolid(0.5, 0.1, 0.5, 0x00d4aa);
+      b.position.set(-3.5 + i * 1.35, -3.2, 0);
+      g.add(b); bars.push(b);
+    }
+    const Hs = [2.4, 1.8, 2.0, 2.6, 1.5, 1.2];
+    scene.add(g);
+    state.update = (t) => {
+      bars.forEach((b, i) => {
+        const target = Hs[i] * (0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * 0.8 + i)));
+        b.scale.y = target * 8;
+        b.position.y = -3.2 + target / 2;
+      });
+    };
+  }
+
+  const SITE_STAGES = [
+    { cvId: 'stage1', glId: 'gl1', draw: drawPhaseStage, speed2: 1, vwId: 'vw1', tcId: 'tc1', build: buildBeam3D, cam: { r: 16, h: 8, ty: 0.6, sp: 0.12 }, vw2d: 'VISTA 2D · SEZIONE', fadeAt: 16 },
+    { cvId: 'stage2', glId: 'gl2', draw: drawFamilyStage, speed2: 1, vwId: 'vw2', tcId: 'tc2', build: buildFamilies3D, cam: { r: 15, h: 8, ty: 0.4, sp: 0.14 }, vw2d: 'VISTA 2D · SEZIONE', fadeAt: 17 },
+    { cvId: 'stage3', glId: 'gl3', draw: drawCheckStage, speed2: 1, vwId: 'vw3', tcId: 'tc3', build: buildChecks3D, cam: { r: 18, h: 7, ty: 0, sp: 0.1 }, vw2d: 'VISTA 2D · VERIFICHE', fadeAt: 18 }
+  ];
+
+  // hero phase tags
+  (function heroTags() {
+    const wrap = document.getElementById('heroPhases');
+    if (!wrap) return;
+    CSC_PHASES.forEach((p, i) => {
+      const s = document.createElement('span');
+      s.className = 'phase-tag' + (i === 0 ? ' on' : '');
+      s.textContent = p.short + ' · ' + p.note;
+      wrap.appendChild(s);
+    });
+    let k = 0;
+    setInterval(() => {
+      k = (k + 1) % CSC_PHASES.length;
+      [...wrap.children].forEach((el, i) => el.classList.toggle('on', i === k));
+    }, 2600);
+  })();
+
+  /* ============================================================
+     MANAGER 2D+3D
+     ============================================================ */
+  const stages = SITE_STAGES;
+  stages.forEach(s => {
+    s.cv = document.getElementById(s.cvId);
+    s.ctx = s.cv.getContext('2d');
+    s.dpr = Math.min(2, window.devicePixelRatio || 1);
+    s.st = { t0: null, visible: false, hud: 0, mode: '2d' };
+    s.gl = null; s.glTried = false;
+    new IntersectionObserver(es => es.forEach(e => s.st.visible = e.isIntersecting), { threshold: 0.03 }).observe(s.cv);
+  });
+  const Tm = SITE_Tm || 26;
+  const gT0 = performance.now();
+  (function loop(now) {
+    const t = ((now || performance.now()) - gT0) / 1000;
+    for (const s of stages) {
+      if (!s.st.visible) continue;
+      try {
+        if (s.st.t0 === null) s.st.t0 = t;
+        let local = t - s.st.t0;
+        if (local >= Tm) { s.st.t0 += Tm * Math.floor(local / Tm); local = t - s.st.t0; }
+        let o2 = 1, o3 = 0;
+        if (local < 0.9) o2 = local / 0.9;
+        if (local > (s.fadeAt || 12) && local <= ((s.fadeAt || 12) + 1.2)) { const f = (local - (s.fadeAt || 12)) / 1.2; o2 = 1 - f; o3 = f; }
+        else if (local > ((s.fadeAt || 12) + 1.2)) { o2 = 0; o3 = 1; }
+        s.cv.style.opacity = o2.toFixed(2);
+        if (o2 > 0.02) {
+          const cw = s.cv.clientWidth, ch = s.cv.clientHeight;
+          if (cw && ch) {
+            const bw = Math.round(cw * s.dpr), bh = Math.round(ch * s.dpr);
+            if (s.cv.width !== bw || s.cv.height !== bh) { s.cv.width = bw; s.cv.height = bh; }
+            s.ctx.setTransform(s.dpr, 0, 0, s.dpr, 0, 0);
+            s.draw(s.ctx, cw, ch, local * s.speed2, t, s.st);
+          }
+        }
+        if (!s.gl && !s.glTried && o3 > 0.01) { s.glTried = true; s.gl = createGL(s); }
+        if (s.gl) {
+          s.gl.canvas.style.opacity = o3.toFixed(2);
+          if (o3 > 0.02) s.gl.render(t);
+        }
+        const mode = o3 > 0.5 ? '3d' : '2d';
+        if (mode !== s.st.mode) {
+          s.st.mode = mode;
+          const el = document.getElementById(s.vwId);
+          if (el) el.textContent = mode === '3d' ? 'VISTA 3D · ORBIT' : (s.vw2d || 'VISTA 2D · ANALISI');
+        }
+        const tcEl = document.getElementById(s.tcId);
+        if (tcEl) tcEl.textContent = timecode(local);
+      } catch (e) { /* continua */ }
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+
+  function createGL(s) {
+    try {
+      const glCanvas = document.createElement('canvas');
+      glCanvas.className = 'gl-layer';
+      s.cv.parentNode.insertBefore(glCanvas, s.cv.nextSibling);
+      const renderer = new THREE.WebGLRenderer({ canvas: glCanvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 500);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+      const dir = new THREE.DirectionalLight(0xffffff, 0.7);
+      dir.position.set(30, 50, 20); scene.add(dir);
+      const grid = new THREE.GridHelper(120, 24, 0x00d4aa, 0x8a8a9a);
+      grid.material.opacity = 0.12; grid.material.transparent = true;
+      scene.add(grid);
+      const state = { update: () => {} };
+      s.build(scene, state);
+      const c = s.cam;
+      return {
+        canvas: glCanvas,
+        render(t) {
+          const w = s.cv.clientWidth, h = s.cv.clientHeight;
+          if (!w || !h) return;
+          if (glCanvas.width !== Math.round(w * renderer.getPixelRatio()) || glCanvas.height !== Math.round(h * renderer.getPixelRatio())) {
+            renderer.setSize(w, h, false);
+            camera.aspect = w / h; camera.updateProjectionMatrix();
+          }
+          const a = t * (c.sp || 0.12);
+          camera.position.set(c.r * Math.cos(a), c.h + Math.sin(t * 0.4) * 1.6, c.r * Math.sin(a));
+          camera.lookAt(0, c.ty || 0, 0);
+          state.update(t);
+          renderer.render(scene, camera);
+        }
+      };
+    } catch (e) { return null; }
+  }
+
+  /* ============================================================
+     TYPING + REVEAL
+     ============================================================ */
+  async function typeInto(el, text, speed) {
+    el.textContent = '';
+    for (const ch of text) { el.textContent += ch; await sleep(speed); }
+  }
+  function showOut(id, txt) {
+    const el = document.getElementById(id);
+    if (txt) el.textContent = txt;
+    el.style.opacity = 1;
+  }
+  const termDone = { demo1: false, demo2: false, demo3: false };
+  const demoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelector('.demo-text').classList.add('in-view');
+        const fn = SITE_RUN[entry.target.id];
+        if (fn && !termDone[entry.target.id]) { termDone[entry.target.id] = true; fn(); }
+      }
+    });
+  }, { threshold: 0.35 });
+  document.querySelectorAll('.scroll-demo-section').forEach(sec => demoObserver.observe(sec));
+
+  /* avvio terminale hero (dopo che SITE_TERMINAL è definito) */
+  runTerminal(SITE_TERMINAL);
+
 </script>
 </body>
 </html>
